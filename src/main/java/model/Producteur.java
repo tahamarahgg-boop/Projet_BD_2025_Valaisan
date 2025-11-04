@@ -5,9 +5,7 @@ public class Producteur {
     private String nom;
     private String adresse;
     private String email;
-    private String typeActivite;
-    private double latitude;
-    private double longitude;
+
 
     // Constructeurs, getters, setters...
     public Producteur() {}
