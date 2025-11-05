@@ -1,0 +1,64 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Documentation Projet BD}
+\author{}
+
+\begin{document}
+\maketitle
+
+
+\section{Analyse du problème}
+
+\subsection*{Dépendances fonctionnelles}
+On fait le choix d'inclure le numéro de téléphone et l'adresse email dans les coordonnées de contact du producteur.\\
+
+idProducteur $\xrightarrow{}$ nom, adresse, geolocalisation, email, tel\\
+
+On ajoute le mode de disponibilité (en stock ou sur commande)\\
+idProduit $\xrightarrow{}$ nom, categorie, description, idProducteur, caracteristiques, modeDisponibilite\\
+
+On fait le choix d'identifier la réception d'un stock par quatre valeurs : idProduit,  modeConditionnement, Poids et dateReception. En effet, on peut recevoir plusieurs types de conditionnement, et plusieurs sachets de différents poids un même jour.\\
+idProduit,  modeConditionnement, Poids, dateReception $\xrightarrow{}$ Prix, Stock, datePeremption, typeDatePeremption\\
+
+idContenant $\xrightarrow{}$ type, capacite, stock, prix, reutilisable\\
+
+On identifie les pertes par sa date, et l'arrivage concerné, en prenant les mêmes identifiants de l'arrivage\\
+datePerte, idProduit, modeConditionnement, Poids, dateReception $\xrightarrow{}$ naturePerte, Quantite\\
+
+idClient $\xrightarrow{}$ nom, prenom, email, tel\\
+idCommande $\xrightarrow{}$ idClient, dateCom, heure, statut, modePaiement, modeRecuperation\\
+Dans la commande d'une livraison, on rajoute l'adresse de livraison car un client peut avoir plusieurs adresses\\
+idCommandeLivraison $\xrightarrow{}$ paysLivraison, poids, distance, adresseLivraison, Prix\\
+idCommandeBoutique $\xrightarrow{}$ Prix\\
+\subsection*{Contraintes de multiplicité}
+
+idProducteur $->>$ typeActivite\\
+idProduit $->>$ dateDebut, dateFin\\
+idClient $->>$ adressePostale\\
+idCommande $->>$ idProduit, modeConditionnement, quantite, prixUnitaire, sousTotal
+
+\subsection*{Contraintes de valeur}
+Prix $>$ 0\\
+Stock $>$ 0\\
+Quantite $>$ 0\\
+prixUnitaire $>$ 0\\
+sousTotal $>$ 0\\  
+modeConditionnement $\in \{"Vrac", "Pre-conditionne"$\}\\
+typeDatePeremption $\in \{"DLC", "DLUO"\}$\\
+statut $\in \{"En~preparation", "Prete", "En~livraison", "Livree", "Annulee"\}$\\
+
+
+\end{document}
