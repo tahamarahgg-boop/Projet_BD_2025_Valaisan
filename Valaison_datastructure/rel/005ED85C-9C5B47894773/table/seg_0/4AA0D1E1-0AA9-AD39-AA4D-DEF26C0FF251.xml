@@ -1,0 +1,92 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="4AA0D1E1-0AA9-AD39-AA4D-DEF26C0FF251" name="Adresse">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>F4B25DA8-DA49-E237-93F8-CCC350F35074</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="idAdresse" id="34B9C73A-0363-71A3-90BC-2AA5A567BA28">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>D88AB00D-7BD8-9979-78A0-ECF7D8183751</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="idClient" id="DE785ED7-CE78-05A0-E86B-9EAE8EB2B771">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>2715BB68-0915-016C-9EF4-AC00F68D38D3</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="9F3AF85E-D954-BCE6-946F-59F8E75A138E" referredColumn="E4931B90-3ACE-1C15-D76E-C44251CBFCED"/>
+</associations>
+</Column>
+<Column name="adressePostale" id="F4EA1DAD-0A12-EF21-139A-20BBC75C75B9">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>71AA937D-264D-46B9-04E4-DF489ACECEC9</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>B4EC42B8-B1E1-DE73-FF09-D3FEEEB32042</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="pays" id="EAD1B877-C929-E066-F6BC-2E8A1A195A8B">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>5E710BFA-6789-2C8E-7353-0839888D1015</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>45B81223-88D4-5C7C-3D4E-446D07F943DA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="17A07446-7FA9-238A-8191-C884DF6744B5" name="Adresse_PK">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>60AB216C-3094-7DCA-0A1C-5037AB5E845F</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="34B9C73A-0363-71A3-90BC-2AA5A567BA28"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B4B7174F-3FD6-D7DA-38A5-5AF711DDD01B" name="Adresse_Client_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DE785ED7-CE78-05A0-E86B-9EAE8EB2B771"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="0FAEA80C-383B-30E7-EAA1-C944872D7455" containerWithKeyObject="9C37FFFA-88FC-C0EE-51C1-9268E940E64D" localFKIndex="A8414678-60B3-6E27-A953-E4004CE23C67" name="Lot_Article_FK">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>D269D93A-AF00-9750-7BEE-740491136F3C</importedID>
+<referredTableLongName>Article</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>E5FBF2CB-BC83-CB23-8460-9E9709583FAA</referredTableID>
+<keyObject>19AC6A82-0FBA-FAD3-6778-CE7F429E0380</keyObject>
+<referredKeyID>19AC6A82-0FBA-FAD3-6778-CE7F429E0380</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>idArticle</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

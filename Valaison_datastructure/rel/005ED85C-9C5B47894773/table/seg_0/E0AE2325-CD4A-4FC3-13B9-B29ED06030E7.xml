@@ -1,0 +1,79 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="E0AE2325-CD4A-4FC3-13B9-B29ED06030E7" name="Article_Contenant">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>5EEB66E4-FEB2-3AE6-F7CA-06DFF85F9A56</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="idArticle" id="70AB4739-07AD-4B7F-A36C-2E9FB02022C6">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>8004EEDE-768F-49CB-084E-12C7B904F378</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D4610EBC-E589-BB03-88C9-1D75DA3A6CE4" referredColumn="A2959D36-164D-6382-3879-7F524EA0A6AF"/>
+</associations>
+</Column>
+<Column name="idContenant" id="006419B4-97C0-465B-FB72-4DE682D57F1B">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>1A1EC4C5-E56D-8391-1209-FCC1D1471331</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="493542EC-BD53-530D-7DE4-5FD12DA1E46D" referredColumn="B890BC24-7B93-FCD0-CCB3-6FA733C71C9B"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F96E4EA8-D57C-F5BF-3BBE-9EC4F34B6347" name="Article_Contenant_PK">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>500306FC-AB5F-0052-987D-79235EA08DA3</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="70AB4739-07AD-4B7F-A36C-2E9FB02022C6"/>
+<colUsage columnID="006419B4-97C0-465B-FB72-4DE682D57F1B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7F3D1BF0-0B90-2982-A1DB-06A7CC9D2D08" name="Article_Contenant_Article_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="70AB4739-07AD-4B7F-A36C-2E9FB02022C6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="590D1D42-96E7-EE4F-546A-3B4AB035F4C8" name="Article_Contenant_Contenant_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="006419B4-97C0-465B-FB72-4DE682D57F1B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

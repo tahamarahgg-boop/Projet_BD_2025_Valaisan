@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<LogicalDesign class="oracle.dbtools.crest.model.design.logical.LogicalDesign" name="Logical" id="D1FC488D-7F98-9418-B83D-4C9672E33147" mainViewID="3093A365-2B7A-9965-3450-174E9FB8235D">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:56:22 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</LogicalDesign>

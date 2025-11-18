@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="Valaison_datastructure" id="36FFFE8C-C156-B465-1206-63844F959417" version="3.5">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:56:22 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>36FFFE8C-C156-B465-1206-63844F959417</designId>
+<usedDesignStorageDescriptors>
+<designDescr class="oracle.dbtools.crest.model.design.Design$DesignStorageDesc" id="C26ABEED-8CD9-AB7A-BF81-10DE4AC3DE0E">
+<designStoragePath>C:\Valaison</designStoragePath>
+</designDescr>
+</usedDesignStorageDescriptors>
+</OSDM_Design>

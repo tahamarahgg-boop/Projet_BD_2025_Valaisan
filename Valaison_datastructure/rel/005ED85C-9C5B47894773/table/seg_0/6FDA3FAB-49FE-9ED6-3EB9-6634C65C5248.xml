@@ -1,0 +1,105 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="6FDA3FAB-49FE-9ED6-3EB9-6634C65C5248" name="Produit">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>DDEDF34C-4E5C-47CD-40A7-940790CBE916</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="idProduit" id="00ED247F-0D1B-116D-264E-73E6D202005C">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>E01E6E32-0238-CD61-175B-C8C82BE6F2BE</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="idProducteur" id="CDE5AF3E-C410-B475-BDE9-78F0AA699018">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>E558B21A-208B-2399-9794-76B89617D018</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D4B32927-971E-5261-C8B0-174E9CEEE5F4" referredColumn="ECB6F3DA-8E80-E99C-B43D-EFFBAC8866F3"/>
+</associations>
+</Column>
+<Column name="nom" id="86C6016A-8086-8CD4-B768-E881990C70F4">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>90323F8F-1B07-71E1-1936-5B510830F3CA</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>761304AC-7CC7-6542-2364-1888FDFF540A</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="categorie" id="C40AC1DD-60E9-F29C-A989-AA9A55F536A0">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>52E46014-3EB2-E388-F740-D49FEBEFA4D8</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>45B81223-88D4-5C7C-3D4E-446D07F943DA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="description" id="63C1EF73-B472-AA36-FBA8-293911388491">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>F55F922C-E3C7-1EA4-1746-99D3262E0744</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>1E10F9A9-AB65-537D-0AD2-4AB9DC4390F9</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="07805747-B4EE-0CA5-FF65-377B429A5BD4" name="Produit_PK">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>5DDA6BAF-F3F5-71E4-6DA7-20C0F480AB1E</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="00ED247F-0D1B-116D-264E-73E6D202005C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9A86169C-0774-36B5-F403-14A7B89A92E6" name="Produit_Producteur_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="CDE5AF3E-C410-B475-BDE9-78F0AA699018"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,100 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="F09EBC78-CE44-8119-D37D-8B174A684182" name="est_de_saison">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 09:28:17 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<ordsAlias>table_18</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Produit_idProduit" id="411583B8-12A6-8622-0046-542513AA0FA6">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 09:28:33 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D307E523-E816-63A5-678F-4B1FAB36987D" referredColumn="00ED247F-0D1B-116D-264E-73E6D202005C"/>
+</associations>
+</Column>
+<Column name="Saison_dateDebut" id="5D5FBB66-6DC4-520F-45C8-84D3C92B5CAA">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 09:28:39 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<domain>612B6BBE-C337-0E16-257B-6028BE8302B6</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="FFF1B83F-E019-AFAF-B2E1-49D47DCE2AEE" referredColumn="E4EC95DB-3E11-2433-0B8E-E01DFB7A223D"/>
+</associations>
+</Column>
+<Column name="Saison_dateFin" id="CECC506E-0ACD-A77B-249D-61FF01B031D0">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 09:28:39 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<domain>612B6BBE-C337-0E16-257B-6028BE8302B6</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="FFF1B83F-E019-AFAF-B2E1-49D47DCE2AEE" referredColumn="7C0C696E-D02E-938C-733F-3B4E86822F9D"/>
+</associations>
+</Column>
+<Column name="saison" id="96390C36-A6BF-F59C-E217-DF9F1E838203">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 09:29:17 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>45B81223-88D4-5C7C-3D4E-446D07F943DA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="07E0001A-9E97-5204-3B39-ABF13E81BA77" name="est_de_saison_PK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 09:29:17 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="411583B8-12A6-8622-0046-542513AA0FA6"/>
+<colUsage columnID="5D5FBB66-6DC4-520F-45C8-84D3C92B5CAA"/>
+<colUsage columnID="CECC506E-0ACD-A77B-249D-61FF01B031D0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="BF8A4584-43FF-A166-7185-ECE1325CAAEA" name="est_de_saison_Produit_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 09:28:33 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="411583B8-12A6-8622-0046-542513AA0FA6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="512EFFBA-C0D7-E678-D692-D1E8414794EF" name="est_de_saison_Saison_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 09:28:39 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5D5FBB66-6DC4-520F-45C8-84D3C92B5CAA"/>
+<colUsage columnID="CECC506E-0ACD-A77B-249D-61FF01B031D0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

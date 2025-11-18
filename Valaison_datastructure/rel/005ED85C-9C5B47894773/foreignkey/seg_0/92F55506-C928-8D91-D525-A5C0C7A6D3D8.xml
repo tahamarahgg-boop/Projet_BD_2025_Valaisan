@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="92F55506-C928-8D91-D525-A5C0C7A6D3D8" containerWithKeyObject="104D3AC4-8F78-E11E-54EB-41B583457891" localFKIndex="F2EB72E0-B082-2040-7CB2-06D799E426CA" name="est_de_chara_Caracteristique_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 09:22:24 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<referredTableLongName>Caracteristique</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>085D6FEE-7AE0-BDE9-0B1D-F61E597425DC</referredTableID>
+<keyObject>0B76519A-DF47-5292-D2E9-4D8E35587786</keyObject>
+<referredKeyID>0B76519A-DF47-5292-D2E9-4D8E35587786</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>Caracteristique</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

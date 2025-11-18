@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="12A81814-513F-0E3B-FAA5-32E06DF87327" containerWithKeyObject="A399B22F-576A-8FB9-47A6-152A37BC73C2" localFKIndex="ADF6C76F-F02E-6CD6-ACA7-685FD54A293A" name="LigneCommande_Commande_FK">
+<sourceDDLFile>Valaison.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 08:58:29 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>A85455C2-08B2-7F08-91F5-46BDCE0FD12D</importedID>
+<referredTableLongName>Commande</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>65555473-97D5-F76A-173B-A9A8CB44744F</referredTableID>
+<keyObject>C0408C1F-1583-4553-F927-FAE217F51925</keyObject>
+<referredKeyID>C0408C1F-1583-4553-F927-FAE217F51925</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>idCommande</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>
