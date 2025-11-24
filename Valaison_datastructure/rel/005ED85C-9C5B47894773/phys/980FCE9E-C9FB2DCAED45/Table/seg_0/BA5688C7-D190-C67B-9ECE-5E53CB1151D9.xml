@@ -1,0 +1,45 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxySqlServerv2k5 class="oracle.dbtools.crest.model.design.storage.sqlserver.v2k5.TableProxySqlServerv2k5" name="Adresse" directorySegmentName="seg_0" id="BA5688C7-D190-C67B-9ECE-5E53CB1151D9">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<database>DB_NULLELEMENT</database>
+<schema>1B299A87-FE0F-4200-83D5-9759C7EE39DF</schema>
+<columnProxies>
+<ColumnProxy class="oracle.dbtools.crest.model.design.storage.sqlserver.v2k12.ColumnProxySqlServerv2k12" name="adressePostale" id="3F886BA0-107F-CAB1-9A46-E332BE9C0E3A">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy class="oracle.dbtools.crest.model.design.storage.sqlserver.v2k12.ColumnProxySqlServerv2k12" name="pays" id="AFD8AE65-3563-92F9-72C6-36BB06F27972">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy class="oracle.dbtools.crest.model.design.storage.sqlserver.v2k12.ColumnProxySqlServerv2k12" name="idClient" id="B5D47753-44D1-8F6A-CC4E-1E4C65A7CEF5">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy class="oracle.dbtools.crest.model.design.storage.sqlserver.v2k12.ColumnProxySqlServerv2k12" name="idAdresse" id="F4A26E59-57C9-452C-82AF-15A37B0C2637">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.sqlserver.v2k5.FKProxySqlServerv2k5" name="Adresse_Client_FK" id="4ECEC47D-15C6-EC9D-690B-BC9539E08E3D">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>deepseek_sql_20251118_27282c</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.sqlserver.v2k5.PKProxySqlServerv2k5" name="Adresse_PK" id="F72349A5-2B19-4D65-3E17-8F816241A579">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<clustered>true</clustered>
+</PrimaryKey>
+</primaryKeys>
+</TableProxySqlServerv2k5>

@@ -1,0 +1,50 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxySqlServerv2k5 class="oracle.dbtools.crest.model.design.storage.sqlserver.v2k5.TableProxySqlServerv2k5" name="est_de_saison" directorySegmentName="seg_0" id="6C798405-E652-841E-A551-EF3D415C5E70">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<database>DB_NULLELEMENT</database>
+<schema>10F05A33-117F-D0C4-9AF3-EC6A09AF3F50</schema>
+<columnProxies>
+<ColumnProxy class="oracle.dbtools.crest.model.design.storage.sqlserver.v2k12.ColumnProxySqlServerv2k12" name="Produit_idProduit" id="5135A032-074E-F3D3-AFF3-32726553DCB3">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy class="oracle.dbtools.crest.model.design.storage.sqlserver.v2k12.ColumnProxySqlServerv2k12" name="Saison_dateDebut" id="9AD36399-7C85-7E01-77AB-4C4EDB8A1FD0">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy class="oracle.dbtools.crest.model.design.storage.sqlserver.v2k12.ColumnProxySqlServerv2k12" name="saison" id="BF35D062-79E8-F439-815A-BFAC6E0C24F5">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy class="oracle.dbtools.crest.model.design.storage.sqlserver.v2k12.ColumnProxySqlServerv2k12" name="Saison_dateFin" id="FECCA947-3022-8B03-F425-23E6FBDB9D8D">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.sqlserver.v2k5.FKProxySqlServerv2k5" name="est_de_saison_Produit_FK" id="005C3F9C-8C3B-3796-EE36-D6BB54C1FF3D">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>deepseek_sql_20251118_27282c</ownerDesignName>
+</ForeignKey>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.sqlserver.v2k5.FKProxySqlServerv2k5" name="est_de_saison_Saison_FK" id="6111247C-7C13-1EE4-1C94-0F8E666D1045">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>deepseek_sql_20251118_27282c</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.sqlserver.v2k5.PKProxySqlServerv2k5" name="est_de_saison_PK" id="F4657975-562E-2576-DB02-5C57E1D594A6">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<clustered>true</clustered>
+</PrimaryKey>
+</primaryKeys>
+</TableProxySqlServerv2k5>

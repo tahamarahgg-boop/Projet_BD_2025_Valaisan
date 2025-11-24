@@ -1,0 +1,92 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="BA5688C7-D190-C67B-9ECE-5E53CB1151D9" name="Adresse">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>AAEAABFF-405E-4FAC-276E-4141DC25A734</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="idAdresse" id="F4A26E59-57C9-452C-82AF-15A37B0C2637">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>E7E2EF35-CA27-7AB5-E4B7-CF024BDD9E1D</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="idClient" id="B5D47753-44D1-8F6A-CC4E-1E4C65A7CEF5">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>2F10EAC8-861B-7460-192A-050BE52A71E7</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="CE3DFD10-5EDE-7F7A-8DC7-35475F9D925A" referredColumn="DF4A1684-EA60-7E91-1295-31A4FDF31C26"/>
+</associations>
+</Column>
+<Column name="adressePostale" id="3F886BA0-107F-CAB1-9A46-E332BE9C0E3A">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>127DF118-BEF1-1D3E-E0BE-52CC4B23DA21</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>B4EC42B8-B1E1-DE73-FF09-D3FEEEB32042</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="pays" id="AFD8AE65-3563-92F9-72C6-36BB06F27972">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>EA41F6CC-F58D-8AB4-23EB-A2471C76B807</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>45B81223-88D4-5C7C-3D4E-446D07F943DA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F72349A5-2B19-4D65-3E17-8F816241A579" name="Adresse_PK">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>5553D315-A66B-3C63-D15F-9F0EC7EF41B7</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F4A26E59-57C9-452C-82AF-15A37B0C2637"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4ECEC47D-15C6-EC9D-690B-BC9539E08E3D" name="Adresse_Client_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B5D47753-44D1-8F6A-CC4E-1E4C65A7CEF5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

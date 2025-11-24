@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="C26AD7E6-7D8B-D458-3A7E-9CFFA0DC934B" containerWithKeyObject="C945FE82-7F7F-936C-9018-425EABD804BB" localFKIndex="80B77450-C96D-AE71-012B-FE97E7825A54" name="Perte_Article_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:27:45 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<referredTableLongName>Article</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>4AD780AB-0F74-CCD0-AC48-9A9E6818C189</referredTableID>
+<keyObject>2FB7350A-499A-D22A-2D53-AF52B8DDA234</keyObject>
+<referredKeyID>2FB7350A-499A-D22A-2D53-AF52B8DDA234</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>idArticle</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

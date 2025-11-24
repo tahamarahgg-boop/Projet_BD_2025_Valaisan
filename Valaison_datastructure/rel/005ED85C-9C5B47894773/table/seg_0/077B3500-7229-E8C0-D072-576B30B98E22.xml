@@ -1,0 +1,92 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="077B3500-7229-E8C0-D072-576B30B98E22" name="est_de_chara">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>96EA6C25-90C5-CF05-B907-1B7C74466462</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Produit_idProduit" id="244588A4-3C40-4BE3-2F07-258B6A247E76">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>3B534EBE-B76C-921A-C2E5-67EA6FC53BFF</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="752BC765-621B-3B10-8EB5-C9C0CFA04000" referredColumn="68997803-D61E-FB25-7792-CDD29A964FB3"/>
+</associations>
+</Column>
+<Column name="Caracteristique_Caracteristique" id="AF00C8E2-59F3-CC9D-721A-D7AAA85B1DDD">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>8B49120F-A28D-4947-F254-AC6801393BA5</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>B4EC42B8-B1E1-DE73-FF09-D3FEEEB32042</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="524F2779-3BE3-625B-291F-7CDCD6772596" referredColumn="3E163605-D77D-AACC-D9B6-70A125BFFA1D"/>
+</associations>
+</Column>
+<Column name="groupe" id="54878DC5-DC04-1FFE-F5BA-914BD09AF8F8">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>767AA006-8D69-1D2E-1521-3C75D7D48D1F</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>8DF8BC4E-091B-4661-ECDC-36D1BA6801B5</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="49CFC9E3-BBAF-3853-1B38-E7CD3A5B3D7C" name="est_de_chara_PK">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>43798AA9-E80E-7E50-37E0-23012B3C015C</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AF00C8E2-59F3-CC9D-721A-D7AAA85B1DDD"/>
+<colUsage columnID="244588A4-3C40-4BE3-2F07-258B6A247E76"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F454BAC4-18A0-1D70-D0A6-0CE49199027F" name="est_de_chara_Caracteristique_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AF00C8E2-59F3-CC9D-721A-D7AAA85B1DDD"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="CA7A4661-D2AB-5755-477F-984797541BEA" name="est_de_chara_Produit_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="244588A4-3C40-4BE3-2F07-258B6A247E76"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

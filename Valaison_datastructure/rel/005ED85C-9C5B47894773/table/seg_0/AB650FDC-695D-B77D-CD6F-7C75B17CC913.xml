@@ -1,0 +1,131 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="AB650FDC-695D-B77D-CD6F-7C75B17CC913" name="Contenant">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>02320D92-7C7E-4A10-3472-4E57C20DFDBB</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="idContenant" id="7B9204A5-1FC3-7214-147D-056974B1C2FC">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>6B802269-9454-2C87-1040-C651ED531285</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="idProduit" id="2DE6BD25-0A1B-FD57-C412-A8EFC5AB1F88">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>784F8A1C-0788-1301-BFB1-6E3F92E599D6</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="5E72560F-1C63-2C4F-3890-EEF64FC7E956" referredColumn="68997803-D61E-FB25-7792-CDD29A964FB3"/>
+</associations>
+</Column>
+<Column name="idArticle" id="F2419E2C-3CDC-A392-5F8E-80B92EEDDFDF">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>BBFB55DC-D6B3-7CD0-139F-3B23DAD6E238</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="7EA2C0C0-70DF-B0FD-E674-A4BB7C9C127C" referredColumn="A86208DF-A46D-9A09-0297-97383459800C"/>
+</associations>
+</Column>
+<Column name="type" id="3486EF0D-F407-F1AB-BCD0-C3F3C561D6BD">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>33F9E6FD-4F4A-2A15-8928-F6ED3D05CF9F</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>45B81223-88D4-5C7C-3D4E-446D07F943DA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="capacite" id="830AE999-60D5-03B7-0F13-67F6F4E9A728">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>FAFBCDE3-AC37-24E0-5E38-4CFEBBE7A5E8</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>03CDD066-3BD1-1F1E-D15B-0453E1901229</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="reutilisable" id="8061949A-F9FF-C932-7F82-DC56B205DC43">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>D141A07D-B93F-2FB7-4AA2-E4EF8549E7F8</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="10971E07-AF9C-D445-EE33-23972DDFF25F" name="Contenant_PK">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>D0F2536A-9845-3892-5387-8B3770E3F80A</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="7B9204A5-1FC3-7214-147D-056974B1C2FC"/>
+<colUsage columnID="F2419E2C-3CDC-A392-5F8E-80B92EEDDFDF"/>
+<colUsage columnID="2DE6BD25-0A1B-FD57-C412-A8EFC5AB1F88"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="0CCE476D-D35E-8ED3-F507-F93CE6273185" name="Contenant_Article_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F2419E2C-3CDC-A392-5F8E-80B92EEDDFDF"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9C302E21-04D8-D504-5EAE-4AF7891FEA28" name="Contenant_Produit_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2DE6BD25-0A1B-FD57-C412-A8EFC5AB1F88"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

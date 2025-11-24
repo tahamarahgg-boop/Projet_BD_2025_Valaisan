@@ -1,0 +1,90 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="C945FE82-7F7F-936C-9018-425EABD804BB" name="Perte">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>ADFE4CED-2430-2125-E1D6-EC2585DBAA27</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="datePerte" id="046A1095-A89F-3CF9-1C8F-E3FBF4D7C48E">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>091EF2EB-98A1-79BF-9E18-82C5AE94B5FA</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<domain>457910F7-9BF6-8918-A035-49D3FF12F233</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="naturePerte" id="F1C95ECD-D49A-0392-0E44-A447D00628CC">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>76C24A4E-A937-2B4A-37AA-68231A121246</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>761304AC-7CC7-6542-2364-1888FDFF540A</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="quantite" id="BCD6691C-C9B8-5180-BA1E-620D0639E028">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>5DC08554-EA49-CBA6-F29B-1A2FE8BA6BA1</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Article_idArticle" id="52DF661D-6912-75C3-A590-ED4B2BA26F3C">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:27:45 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="C26AD7E6-7D8B-D458-3A7E-9CFFA0DC934B" referredColumn="A86208DF-A46D-9A09-0297-97383459800C"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="95A69C61-8512-A095-B19F-4E37F4EC2055" name="Perte_PK">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>F20657B1-DD7C-41B8-394B-8080DDC24649</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="046A1095-A89F-3CF9-1C8F-E3FBF4D7C48E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="80B77450-C96D-AE71-012B-FE97E7825A54" name="Perte_Article_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:27:45 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="52DF661D-6912-75C3-A590-ED4B2BA26F3C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

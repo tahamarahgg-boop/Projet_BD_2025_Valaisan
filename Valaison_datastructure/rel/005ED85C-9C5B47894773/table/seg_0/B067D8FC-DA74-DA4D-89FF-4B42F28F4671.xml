@@ -1,0 +1,125 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="B067D8FC-DA74-DA4D-89FF-4B42F28F4671" name="Produit_Conditionné">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:24:09 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<splittedTableID>4AD780AB-0F74-CCD0-AC48-9A9E6818C189</splittedTableID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="idArticle" id="22D73206-98C7-B3BB-AE83-E2F03E143558">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:24:09 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="0B316BEB-22EF-2E34-3BB5-BBC55F0BED18" referredColumn="A86208DF-A46D-9A09-0297-97383459800C"/>
+</associations>
+</Column>
+<Column name="modeConditionnement" id="B4813C03-8E45-BF81-1DC7-D3189B726A69">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>6BF2C01D-0959-A462-FDAD-77D63DF066CB</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>45B81223-88D4-5C7C-3D4E-446D07F943DA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="poids" id="38E01CB0-854D-8141-A195-81B19E32B1BF">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>8FC8ED4E-D828-17ED-00D3-9C87CD9DD807</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<domain>03CDD066-3BD1-1F1E-D15B-0453E1901229</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="datePeremption" id="01CDCE14-33A9-3757-6AA6-CF96227F3877">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>B7AC4FF2-A227-F740-2C10-BE21DDDDE78B</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<domain>612B6BBE-C337-0E16-257B-6028BE8302B6</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="TypeDatePeremption" id="877A0968-0C0F-EE51-0630-4B4EFA062865">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>56A17E75-A5C1-CD27-DF40-00AF1FB65DF7</importedID>
+<nullsAllowed>true</nullsAllowed>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>45B81223-88D4-5C7C-3D4E-446D07F943DA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Produit_idProduit" id="0D214831-E56D-5972-4F0E-722E1BB4F409">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:25:18 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="83735EC3-F5F7-2BEE-2811-8964A198E1A2" referredColumn="68997803-D61E-FB25-7792-CDD29A964FB3"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="77025191-29A8-5CE6-F096-0D06806FA8F0" name="Produit_Conditionné_PK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:24:09 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="22D73206-98C7-B3BB-AE83-E2F03E143558"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="44301D73-D923-E64C-AAD6-5F4AF2950A34" name="Produit_Conditionné_Article_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:24:09 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="22D73206-98C7-B3BB-AE83-E2F03E143558"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="69442B9C-812F-D48E-1283-FD9989FD7A51" name="Produit_Conditionné_Produit_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:25:18 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0D214831-E56D-5972-4F0E-722E1BB4F409"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

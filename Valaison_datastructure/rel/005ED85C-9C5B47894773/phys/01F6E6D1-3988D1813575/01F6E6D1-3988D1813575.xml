@@ -1,6 +1,6 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<StorageDesignOraclev20c class="oracle.dbtools.crest.model.design.storage.oracle.v20c.StorageDesignOraclev20c" name="Oracle Database 21c" id="F29D9416-787A-9F3D-184F-9286591E5E92" siteID="01F6E6D1-21D0-CFBD-ABDD-3988D1813575" siteName="Oracle Database 21c" siteType="17">
+<StorageDesignOraclev20c class="oracle.dbtools.crest.model.design.storage.oracle.v20c.StorageDesignOraclev20c" name="Oracle Database 21c" id="52D7CCDF-8C22-9F9D-1905-3A14FE1E9176" siteID="01F6E6D1-21D0-CFBD-ABDD-3988D1813575" siteName="Oracle Database 21c" siteType="17">
 <createdBy>taham</createdBy>
-<createdTime>2025-11-18 08:58:26 UTC</createdTime>
-<ownerDesignName>dl_settings</ownerDesignName>
+<createdTime>2025-11-18 09:54:07 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
 </StorageDesignOraclev20c>

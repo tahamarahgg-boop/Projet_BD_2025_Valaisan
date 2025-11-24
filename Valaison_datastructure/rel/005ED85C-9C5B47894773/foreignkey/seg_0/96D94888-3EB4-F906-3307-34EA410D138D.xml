@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="96D94888-3EB4-F906-3307-34EA410D138D" containerWithKeyObject="6C798405-E652-841E-A551-EF3D415C5E70" localFKIndex="6111247C-7C13-1EE4-1C94-0F8E666D1045" name="est_de_saison_Saison_FK">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>A91FDC65-670C-997A-58AF-02793A5B5C72</importedID>
+<referredTableLongName>Saison</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>124C4196-76BA-A994-3D4C-76C95ABE9D64</referredTableID>
+<keyObject>C1DFBB83-A5CA-3A37-8253-C657B025D133</keyObject>
+<referredKeyID>C1DFBB83-A5CA-3A37-8253-C657B025D133</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>dateDebut,dateFin</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

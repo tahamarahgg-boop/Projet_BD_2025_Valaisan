@@ -1,0 +1,24 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<DomainFile class="oracle.dbtools.crest.model.design.DomainFileWrapper" fileName="deepseek_sql_20251118_27282c_Domains">
+<domains>
+<Domain class="oracle.dbtools.crest.model.design.Domain" name="NUMERIC_28_0_0" id="03CDD066-3BD1-1F1E-D15B-0453E1901229">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 09:56:59 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<avTSortOrder>0</avTSortOrder>
+<dataTypePrecision>28</dataTypePrecision>
+<dataTypeScale>0</dataTypeScale>
+<dataTypeSize>0</dataTypeSize>
+<fileName>deepseek_sql_20251118_27282c_Domains</fileName>
+<logicalDatatype>LOGDT019</logicalDatatype>
+</Domain>
+<Domain class="oracle.dbtools.crest.model.design.Domain" name="Datetime_0_0_0" id="457910F7-9BF6-8918-A035-49D3FF12F233">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 09:56:59 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<avTSortOrder>0</avTSortOrder>
+<fileName>deepseek_sql_20251118_27282c_Domains</fileName>
+<logicalDatatype>LOGDT008</logicalDatatype>
+</Domain>
+</domains>
+</DomainFile>

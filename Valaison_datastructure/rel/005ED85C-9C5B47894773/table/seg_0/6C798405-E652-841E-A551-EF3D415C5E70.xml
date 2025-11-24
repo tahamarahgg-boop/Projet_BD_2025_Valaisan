@@ -1,0 +1,108 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="6C798405-E652-841E-A551-EF3D415C5E70" name="est_de_saison">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>34ABE41B-06B7-2039-8F3B-5B669BBD1B8A</importedID>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Produit_idProduit" id="5135A032-074E-F3D3-AFF3-32726553DCB3">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>EEFC0D06-2132-B71D-CC7A-3B85427D9604</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<domain>721E9698-372F-85C7-C111-C85103DCC9AA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="629B181E-63D8-E3ED-2DBC-253C2EACC988" referredColumn="68997803-D61E-FB25-7792-CDD29A964FB3"/>
+</associations>
+</Column>
+<Column name="Saison_dateDebut" id="9AD36399-7C85-7E01-77AB-4C4EDB8A1FD0">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>C4A640D4-10D1-54CD-C159-E7BE644BD5AA</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<domain>612B6BBE-C337-0E16-257B-6028BE8302B6</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="96D94888-3EB4-F906-3307-34EA410D138D" referredColumn="7732F58F-0EDF-F8A1-1F71-AE005EF8961A"/>
+</associations>
+</Column>
+<Column name="Saison_dateFin" id="FECCA947-3022-8B03-F425-23E6FBDB9D8D">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>85252F5F-AD47-66D7-CBC2-598A7B561F0A</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<domain>612B6BBE-C337-0E16-257B-6028BE8302B6</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="96D94888-3EB4-F906-3307-34EA410D138D" referredColumn="A2A614A8-A6A2-AB3F-C737-960B037CEC0E"/>
+</associations>
+</Column>
+<Column name="saison" id="BF35D062-79E8-F439-815A-BFAC6E0C24F5">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>D3EC2B5A-493B-C63B-FAF2-1D42C997DD51</importedID>
+<use>0</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<domain>45B81223-88D4-5C7C-3D4E-446D07F943DA</domain>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F4657975-562E-2576-DB02-5C57E1D594A6" name="est_de_saison_PK">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>772A88FF-80FD-39A2-3032-AA1FA733E738</importedID>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5135A032-074E-F3D3-AFF3-32726553DCB3"/>
+<colUsage columnID="9AD36399-7C85-7E01-77AB-4C4EDB8A1FD0"/>
+<colUsage columnID="FECCA947-3022-8B03-F425-23E6FBDB9D8D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="005C3F9C-8C3B-3796-EE36-D6BB54C1FF3D" name="est_de_saison_Produit_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5135A032-074E-F3D3-AFF3-32726553DCB3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="6111247C-7C13-1EE4-1C94-0F8E666D1045" name="est_de_saison_Saison_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9AD36399-7C85-7E01-77AB-4C4EDB8A1FD0"/>
+<colUsage columnID="FECCA947-3022-8B03-F425-23E6FBDB9D8D"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

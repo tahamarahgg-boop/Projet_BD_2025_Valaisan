@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="5BA69E41-CB82-4FB2-A903-5B7941C9E20A" containerWithKeyObject="6CE499F7-C827-9EF2-DDF6-8F8DB1B0740A" localFKIndex="D93594F4-7736-F19A-87D2-B1CC11497AA1" name="est_disponible_Disponibilite_FK">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>39BF6D78-B64F-4C19-5CC2-04D2A9B9FA7E</importedID>
+<referredTableLongName>Disponibilite</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>89230FD0-80CE-B091-22EC-8E344F49E0F9</referredTableID>
+<keyObject>5354AFFF-686D-21AB-1903-512724EC2E9C</keyObject>
+<referredKeyID>5354AFFF-686D-21AB-1903-512724EC2E9C</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>delai</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

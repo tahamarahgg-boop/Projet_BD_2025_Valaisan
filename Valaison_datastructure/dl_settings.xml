@@ -459,6 +459,17 @@
 								<views value="70"/>
 								<triggers value="70"/>
 							</physical_model_005ED85C-84B9-AC66-94B3-9C5B47894773_Oracle_Database_21c>
+							<physical_model_005ED85C-84B9-AC66-94B3-9C5B47894773_SQL_Server_2012>
+								<physical_model_name value="SQL Server 2012"/>
+								<data_bases value="70"/>
+								<logins value="70"/>
+								<tables value="70"/>
+								<views value="70"/>
+								<user_defined_types value="70"/>
+								<triggers value="70"/>
+								<users value="70"/>
+								<roles value="70"/>
+							</physical_model_005ED85C-84B9-AC66-94B3-9C5B47894773_SQL_Server_2012>
 				</physical_models_estimates>
 			</relational_model_0_estimates>
 		</relational_model_estimates>

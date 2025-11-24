@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="0B316BEB-22EF-2E34-3BB5-BBC55F0BED18" containerWithKeyObject="B067D8FC-DA74-DA4D-89FF-4B42F28F4671" localFKIndex="44301D73-D923-E64C-AAD6-5F4AF2950A34" name="Produit_Conditionné_Article_FK">
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:24:09 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<shouldEngineer>false</shouldEngineer>
+<referredTableLongName>Article</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>4AD780AB-0F74-CCD0-AC48-9A9E6818C189</referredTableID>
+<keyObject>2FB7350A-499A-D22A-2D53-AF52B8DDA234</keyObject>
+<referredKeyID>2FB7350A-499A-D22A-2D53-AF52B8DDA234</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>idArticle</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

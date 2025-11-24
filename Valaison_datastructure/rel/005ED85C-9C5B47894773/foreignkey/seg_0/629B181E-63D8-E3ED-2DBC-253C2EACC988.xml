@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="629B181E-63D8-E3ED-2DBC-253C2EACC988" containerWithKeyObject="6C798405-E652-841E-A551-EF3D415C5E70" localFKIndex="005C3F9C-8C3B-3796-EE36-D6BB54C1FF3D" name="est_de_saison_Produit_FK">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>D08FCF44-F5EB-263A-E8DC-685EFE5F84D5</importedID>
+<referredTableLongName>Produit</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>AE3734D3-6506-07BC-09A2-2CBD3FDB2EA0</referredTableID>
+<keyObject>593D55B9-4C3D-E21B-6275-FDC175D779E1</keyObject>
+<referredKeyID>593D55B9-4C3D-E21B-6275-FDC175D779E1</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>idProduit</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

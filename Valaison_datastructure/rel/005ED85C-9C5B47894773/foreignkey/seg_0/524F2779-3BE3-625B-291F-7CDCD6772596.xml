@@ -1,0 +1,18 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="524F2779-3BE3-625B-291F-7CDCD6772596" containerWithKeyObject="077B3500-7229-E8C0-D072-576B30B98E22" localFKIndex="F454BAC4-18A0-1D70-D0A6-0CE49199027F" name="est_de_chara_Caracteristique_FK">
+<sourceDDLFile>deepseek_sql_20251118_27282c.sql</sourceDDLFile>
+<createdBy>taham</createdBy>
+<createdTime>2025-11-18 10:10:36 UTC</createdTime>
+<ownerDesignName>Valaison_datastructure</ownerDesignName>
+<importedID>9F33B26A-B869-2602-1B9F-6F1B08C50C89</importedID>
+<referredTableLongName>Caracteristique</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>3D69F26E-8452-BB73-CC97-DC1B52B6DAB6</referredTableID>
+<keyObject>7A0AAA04-C2EB-E72C-6D99-022F4B84052D</keyObject>
+<referredKeyID>7A0AAA04-C2EB-E72C-6D99-022F4B84052D</referredKeyID>
+<mandatory>true</mandatory>
+<refColNames>Caracteristique</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

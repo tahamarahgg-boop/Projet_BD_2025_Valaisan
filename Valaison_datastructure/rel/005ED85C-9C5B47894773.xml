@@ -3,12 +3,17 @@
 <createdBy>taham</createdBy>
 <createdTime>2025-11-18 08:57:53 UTC</createdTime>
 <ownerDesignName>Valaison_datastructure</ownerDesignName>
-<shouldBeOpen>false</shouldBeOpen>
-<selectedRDBMSSite>01F6E6D1-21D0-CFBD-ABDD-3988D1813575</selectedRDBMSSite>
+<shouldBeOpen>true</shouldBeOpen>
+<selectedRDBMSSite>980FCE9E-D688-BDF0-C89A-C9FB2DCAED45</selectedRDBMSSite>
 <importDDLFileStamps>
 <importDDLFileStamp class="oracle.dbtools.crest.imports.DDLFileStamp">
 <fileName>Valaison.sql</fileName>
 <pathName>C:\Users\taham\Projet_BD</pathName>
+<dbType>17</dbType>
+</importDDLFileStamp>
+<importDDLFileStamp class="oracle.dbtools.crest.imports.DDLFileStamp">
+<fileName>deepseek_sql_20251118_27282c.sql</fileName>
+<pathName>C:\Users\taham\Downloads</pathName>
 <dbType>17</dbType>
 </importDDLFileStamp>
 </importDDLFileStamps>
