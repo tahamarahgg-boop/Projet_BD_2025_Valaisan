@@ -65,7 +65,8 @@ CREATE TABLE Article (
     modeConditionnement VARCHAR2(50), -- certains articles n'ont pas de conditionnement (produits en vrac)
     poids NUMBER,                     -- Poids du sachet si pré-conditionné, sinon NULL
     prixAchatProducteur NUMBER(10,2), -- Prix d'achat 
-    prixVenteClient NUMBER(10,2),     -- Prix de vente 
+    prixVenteClient NUMBER(10,2),  -- Prix de vente 
+    delaiDisponibilite NUMBER(5) DEFAULT NULL  ,--pour les articles sur-commande qui ont un delai de disponibilite 
     CONSTRAINT Article_PK PRIMARY KEY (idArticle)
 );
 
@@ -82,10 +83,12 @@ CREATE TABLE Lot (
     idLot INTEGER GENERATED ALWAYS AS IDENTITY,
     idArticle INTEGER NOT NULL,
     dateReception DATE DEFAULT SYSDATE NOT NULL,
+    quantiteInitiale NUMBER(10,2) NOT NULL CHECK (quantiteInitiale >= 0),
     quantiteDisponible NUMBER(10,2) NOT NULL CHECK (quantiteDisponible >= 0),
     datePeremption DATE,
     typePeremption VARCHAR2(4),
-
+    prixLot NUMBER(10,2),               -- prix spécifique au lot
+    pourcentageReduction NUMBER(5,2) DEFAULT 0,  -- % de réduction automatique
     CONSTRAINT Lot_PK PRIMARY KEY (idLot),
     CONSTRAINT Lot_Unique_Livraison UNIQUE (idArticle, dateReception),
     CONSTRAINT Chk_Type_Peremption CHECK (typePeremption IN ('DLC', 'DLUO'))
