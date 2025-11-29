@@ -75,7 +75,6 @@ CREATE TABLE Item (
     typeItem VARCHAR2(20) NOT NULL, -- 'ARTICLE' ou 'CONTENANT'
     idArticle INTEGER,               -- NULL si typeItem = 'CONTENANT'
     idContenant INTEGER,             -- NULL si typeItem = 'ARTICLE'
-    prixVente NUMBER(10,2),
     CONSTRAINT Item_PK PRIMARY KEY (idItem)
 );
 
