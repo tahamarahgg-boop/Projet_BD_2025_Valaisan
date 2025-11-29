@@ -34,10 +34,16 @@ CREATE TABLE Producteur (
     adresse VARCHAR2(200),
     longitude NUMBER,
     latitude NUMBER,
-    typeActivite VARCHAR2(100),
     mail VARCHAR2(200),
     telephone VARCHAR2(20),
     CONSTRAINT Producteur_PK PRIMARY KEY (idProducteur)
+);
+CREATE TABLE ActiviteProducteur (
+    idProducteur INTEGER NOT NULL,
+    nomActivite VARCHAR2(50) NOT NULL,
+   
+    CONSTRAINT Activite_PK PRIMARY KEY (idProducteur, nomActivite)
+    
 );
 
 CREATE TABLE Produit (
@@ -176,6 +182,9 @@ CREATE TABLE est_de_saison (
 -- Liens Produits / Producteurs
 ALTER TABLE Produit ADD CONSTRAINT Produit_Producteur_FK FOREIGN KEY (idProducteur) REFERENCES Producteur(idProducteur);
 ALTER TABLE Article ADD CONSTRAINT Article_Produit_FK FOREIGN KEY (idProduit) REFERENCES Produit(idProduit);
+
+-- Liens  Producteurs / Activités 
+ALTER TABLE ActiviteProducteur ADD CONSTRAINT Activite_Producteur_FK FOREIGN KEY (idProducteur) REFERENCES Producteur(idProducteur);
 
 -- Liens Stocks / Lots / Pertes
 ALTER TABLE Lot ADD CONSTRAINT Lot_Article_FK FOREIGN KEY (idArticle) REFERENCES Article(idArticle);
