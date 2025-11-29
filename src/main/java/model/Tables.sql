@@ -10,9 +10,7 @@ BEGIN
    EXECUTE IMMEDIATE 'DROP TABLE Perte CASCADE CONSTRAINTS';
    EXECUTE IMMEDIATE 'DROP TABLE Lot CASCADE CONSTRAINTS';
    EXECUTE IMMEDIATE 'DROP TABLE Contenant CASCADE CONSTRAINTS';
-   EXECUTE IMMEDIATE 'DROP TABLE est_disponible CASCADE CONSTRAINTS';
    EXECUTE IMMEDIATE 'DROP TABLE est_de_saison CASCADE CONSTRAINTS';
-   EXECUTE IMMEDIATE 'DROP TABLE est_de_chara CASCADE CONSTRAINTS';
    EXECUTE IMMEDIATE 'DROP TABLE Article CASCADE CONSTRAINTS';
    EXECUTE IMMEDIATE 'DROP TABLE Produit CASCADE CONSTRAINTS';
    EXECUTE IMMEDIATE 'DROP TABLE Producteur CASCADE CONSTRAINTS';
@@ -31,58 +29,60 @@ END;
    ============================================================ */
 
 CREATE TABLE Producteur (
-    idProducteur INTEGER NOT NULL,
+    idProducteur INTEGER GENERATED ALWAYS AS IDENTITY,
     nom VARCHAR2(100),
     adresse VARCHAR2(200),
     longitude NUMBER,
     latitude NUMBER,
-    typeActivite VARCHAR2(100), -- Ajouté selon sujet [cite: 15]
+    typeActivite VARCHAR2(100),
+    mail VARCHAR2(200),
+    telephone VARCHAR2(20),
     CONSTRAINT Producteur_PK PRIMARY KEY (idProducteur)
 );
 
 CREATE TABLE Produit (
-    idProduit INTEGER NOT NULL,
+    idProduit INTEGER GENERATED ALWAYS AS IDENTITY,
     idProducteur INTEGER NOT NULL,
-    nom VARCHAR2(100),
+    nom VARCHAR2(100) NOT NULL,
     categorie VARCHAR2(50),
     description VARCHAR2(500),
     CONSTRAINT Produit_PK PRIMARY KEY (idProduit)
 );
-
-CREATE TABLE Article (
-    idArticle INTEGER NOT NULL,
-    idProduit INTEGER NOT NULL,
-    modeConditionnement VARCHAR2(50),
-    poids NUMBER, -- Poids du sachet si pré-conditionné, sinon NULL
-    prixAchatProducteur NUMBER(10,2), -- Prix d'achat 
-    prixVenteClient NUMBER(10,2),     -- Prix de vente 
-    CONSTRAINT Article_PK PRIMARY KEY (idArticle)
-);
-CREATE TABLE Produit_conditionné(
-    idArticle INTEGER UNIQUE
-    modeconditionnement VARCHAR2(50) UNIQUE
-    poids NUMBER,
-    date_Peremption DATE UNIQUE,
-    idProduit INTEGER UNIQUE,
-    TypedatePeremption VARCHAR2(50),
-    CONSTRAINT Produit_conditionné PRIMARY KEY (idArticle, modeConditionnement, poids, date_Peremption, idProduit)
-
-);
-
 CREATE TABLE Contenant (
-    idContenant INTEGER NOT NULL,
-    type VARCHAR2(50),
-    capacite NUMBER,
+    idContenant INTEGER GENERATED ALWAYS AS IDENTITY,
+    typeContenant VARCHAR2(50) NOT NULL,
+    capacite NUMBER(10,3),--litres ou grammes selon le type
     reutilisable NUMBER(1) CHECK (reutilisable IN (0,1)), -- Booléen simulé
     stock INTEGER, -- Gestion du stock des contenants
     prixVente NUMBER(10,2),
     CONSTRAINT Contenant_PK PRIMARY KEY (idContenant)
 );
 
+
+CREATE TABLE Article (
+    idArticle INTEGER GENERATED ALWAYS AS IDENTITY,
+    idProduit INTEGER NOT NULL,
+    modeConditionnement VARCHAR2(50), -- certains articles n'ont pas de conditionnement (produits en vrac)
+    poids NUMBER,                     -- Poids du sachet si pré-conditionné, sinon NULL
+    prixAchatProducteur NUMBER(10,2), -- Prix d'achat 
+    prixVenteClient NUMBER(10,2),     -- Prix de vente 
+    CONSTRAINT Article_PK PRIMARY KEY (idArticle)
+);
+
+CREATE TABLE Item (
+    idItem INTEGER GENERATED ALWAYS AS IDENTITY,
+    typeItem VARCHAR2(20) NOT NULL, -- 'ARTICLE' ou 'CONTENANT'
+    idArticle INTEGER,               -- NULL si typeItem = 'CONTENANT'
+    idContenant INTEGER,             -- NULL si typeItem = 'ARTICLE'
+    prixVente NUMBER(10,2),
+    CONSTRAINT Item_PK PRIMARY KEY (idItem)
+);
+
 CREATE TABLE Lot (
+    idLot INTEGER GENERATED ALWAYS AS IDENTITY,
     idArticle INTEGER NOT NULL,
     dateReception DATE DEFAULT SYSDATE NOT NULL,
-    quantiteDisponible NUMBER(10,2) NOT NULL,
+    quantiteDisponible NUMBER(10,2) NOT NULL CHECK (quantiteDisponible >= 0),
     datePeremption DATE,
     typePeremption VARCHAR2(4),
 
@@ -92,16 +92,16 @@ CREATE TABLE Lot (
 );
 
 CREATE TABLE Perte (
-    idPerte INTEGER NOT NULL, -- ajout idPerte car datePerte n'est pas clé primaire
+    idPerte INTEGER GENERATED ALWAYS AS IDENTITY, -- ajout idPerte car datePerte n'est pas clé primaire
     idLot INTEGER NOT NULL,
     datePerte DATE DEFAULT SYSDATE,
     naturePerte VARCHAR2(100),
-    quantitePerdue NUMBER(10,2),
+    quantitePerdue NUMBER(10,2) CHECK (quantitePerdue >= 0),
     CONSTRAINT Perte_PK PRIMARY KEY (idPerte)
 );
 
 CREATE TABLE Client (
-    idClient INTEGER NOT NULL,
+    idClient INTEGER GENERATED ALWAYS AS IDENTITY,
     mail VARCHAR2(100) NOT NULL UNIQUE,
     nom VARCHAR2(100),
     prenom VARCHAR2(100),
@@ -110,7 +110,7 @@ CREATE TABLE Client (
 );
 
 CREATE TABLE Adresse (
-    idAdresse INTEGER NOT NULL,
+    idAdresse INTEGER GENERATED ALWAYS AS IDENTITY,
     idClient INTEGER NOT NULL,
     adressePostale VARCHAR2(200),
     pays VARCHAR2(50),
@@ -118,7 +118,7 @@ CREATE TABLE Adresse (
 );
 
 CREATE TABLE Commande (
-    idCommande INTEGER NOT NULL,
+    idCommande INTEGER GENERATED ALWAYS AS IDENTITY,
     idClient INTEGER NOT NULL,
     idAdresseLivraison INTEGER, -- Null si retrait boutique
     dateCommande DATE DEFAULT SYSDATE,
@@ -131,12 +131,13 @@ CREATE TABLE Commande (
 );
 
 CREATE TABLE LigneCommande (
-    idLigne INTEGER NOT NULL,
+    idLigne INTEGER GENERATED ALWAYS AS IDENTITY,
     idCommande INTEGER NOT NULL,
-    idArticle INTEGER NOT NULL,
-    quantite NUMBER(10,2), -- Kg ou Unités [cite: 62]
+    idItem INTEGER NOT NULL,
+    quantite NUMBER(10,2) CHECK (quantite >= 0), -- Kg ou Unités [cite: 62]
     prixUnitaireApplique NUMBER(10,2), -- Prix au moment de la commande [cite: 63]
-    CONSTRAINT LigneCommande_PK PRIMARY KEY (idLigne)
+    CONSTRAINT LigneCommande_PK PRIMARY KEY (idLigne),
+    CONSTRAINT UQ_LigneCommande_CommandeItem UNIQUE (idCommande, idItem) --une commande ne peut avoir qu'une seule ligne par article
 );
 
 CREATE TABLE Saison (
@@ -164,6 +165,11 @@ ALTER TABLE Article ADD CONSTRAINT Article_Produit_FK FOREIGN KEY (idProduit) RE
 ALTER TABLE Lot ADD CONSTRAINT Lot_Article_FK FOREIGN KEY (idArticle) REFERENCES Article(idArticle);
 ALTER TABLE Perte ADD CONSTRAINT Perte_Lot_FK FOREIGN KEY (idLot) REFERENCES Lot(idLot);
 
+-- Liens Item/Article/Contenant
+ALTER TABLE Item ADD CONSTRAINT Item_Article_FK FOREIGN KEY (idArticle) REFERENCES Article(idArticle);
+ALTER TABLE Item ADD CONSTRAINT Item_Contenant_FK FOREIGN KEY (idContenant) REFERENCES Contenant(idContenant);
+
+
 -- Liens Clients / Commandes
 ALTER TABLE Adresse ADD CONSTRAINT Adresse_Client_FK FOREIGN KEY (idClient) REFERENCES Client(idClient);
 ALTER TABLE Commande ADD CONSTRAINT Commande_Client_FK FOREIGN KEY (idClient) REFERENCES Client(idClient);
@@ -171,11 +177,13 @@ ALTER TABLE Commande ADD CONSTRAINT Commande_Adresse_FK FOREIGN KEY (idAdresseLi
 
 -- Liens Lignes de Commande
 ALTER TABLE LigneCommande ADD CONSTRAINT Ligne_Commande_FK FOREIGN KEY (idCommande) REFERENCES Commande(idCommande);
-ALTER TABLE LigneCommande ADD CONSTRAINT Ligne_Article_FK FOREIGN KEY (idArticle) REFERENCES Article(idArticle);
+ALTER TABLE LigneCommande ADD CONSTRAINT Ligne_Item_FK FOREIGN KEY (idItem) REFERENCES Item(idItem);
 
 -- Liens Saisonnalité
 ALTER TABLE est_de_saison ADD CONSTRAINT Saison_Produit_FK FOREIGN KEY (idProduit) REFERENCES Produit(idProduit);
 ALTER TABLE est_de_saison ADD CONSTRAINT Saison_Dates_FK FOREIGN KEY (dateDebut, dateFin) REFERENCES Saison(dateDebut, dateFin);
---Liens Produit_Conditionné
-ALTER TABLE Produit_conditionné ADD CONSTRAINT Produit_conditionné_Produit_FK FOREIGN KEY (idProduit) REFERENCES Produit(idProduit);
-ALTER TABLE est_de_saison ADD CONSTRAINT Produit_conditionné_Article_FK FOREIGN KEY (idArticle) REFERENCES Produit(idArticle);
+
+
+
+
+
