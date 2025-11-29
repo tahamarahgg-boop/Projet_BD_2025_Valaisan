@@ -38,7 +38,7 @@ public class ServiceAlerte {
                 if(nbJourRestant<=0){
                     System.out.printf("PERTE péremption : Article = %d, Lot = %d, Quantité = %f\n",
                         idArticle,idLot,stock);
-                    perte_produit(idLot,idArticle,stock,"Péremption");   
+                    perte_produit(idLot,stock,"Péremption");   
                 }
                 else{
                     System.out.printf("Article: %d, Quantité: %f — périme dans %d jours\n",
@@ -54,18 +54,15 @@ public class ServiceAlerte {
     }
 
 
-    public void perte_produit(int idLot,int idArticle,float quantitePerdue,String nature){
+    public void perte_produit(int idLot,float quantitePerdue,String nature){
         String sql = "UPDATE Lot SET quantiteDisponible = quantiteDisponible - ? WHERE idLot = ?;" +
-            "UPDATE Article SET stock = stock - ? WHERE idArticle = ?;" +
             "INSERT INTO Perte (idLot,idContenant,datePerte,naturePerte,quantitePerdue) Values(?,NULL,NOW(),?,?);";
         try(PreparedStatement pstmt = conn.prepareStatement(sql)){
             pstmt.setFloat(1,quantitePerdue);
             pstmt.setInt(2,idLot);
-            pstmt.setFloat(3,quantitePerdue);
-            pstmt.setInt(4,idArticle);
-            pstmt.setInt(5,idLot);
-            pstmt.setString(6,nature);
-            pstmt.setFloat(7,quantitePerdue);
+            pstmt.setInt(3,idLot);
+            pstmt.setString(4,nature);
+            pstmt.setFloat(5,quantitePerdue);
             pstmt.executeUpdate();
             conn.commit();
             System.out.println(" Ajout en Perte du produit !");

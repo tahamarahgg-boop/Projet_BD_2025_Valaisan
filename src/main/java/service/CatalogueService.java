@@ -44,7 +44,7 @@ public class CatalogueService {
 
 
     public void getArticles_Produit(int idProduit){
-        String sql = "SELECT idArticle, modeConditionnement, poids, prixVenteClient, stock" +
+        String sql = "SELECT idArticle, modeConditionnement, poids, prixVenteClient" +
             "FROM Article WHERE Article.idProduit = ?";
         try(PreparedStatement pstmt = conn.prepareStatement(sql)){
             pstmt.setInt(1,idProduit);
@@ -53,10 +53,10 @@ public class CatalogueService {
                 int idArticle = rs.getInt("idArticle");
                 String modeConditionnement = rs.getString("modeConditionnement");
                 boolean est_vrac = modeConditionnement.equals("Vrac");
-                Float prix = rs.getFloat("prixVenteClient");
-                Float stock = rs.getFloat("stock");
+                float prix = rs.getFloat("prixVenteClient");
+                float stock = getStock_Article(idArticle);
                 if(!est_vrac){
-                    Float poids = rs.getFloat("poids");
+                    float poids = rs.getFloat("poids");
                     System.out.printf(" - Id: %d, Article: %s de %f, PrixUnitaire: %f, Stock: %f\n",
                         idArticle,modeConditionnement,poids,prix,stock);
                 }
@@ -67,6 +67,22 @@ public class CatalogueService {
             }
         } catch (SQLException e){
             System.err.println("Erreur lors de la consultation des articles : " + e.getMessage());
+        }
+    }
+
+    private float getStock_Article(int idArticle){
+        String sql = "SELECT SUM(quantiteDisponible) AS stock FROM Lot WHERE idArticle = ? AND quantiteDisponible <> 0";
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1,idArticle);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                return rs.getFloat("stock");
+            }
+            System.out.println("Erreur lors du calcul du stock");
+            return -1;
+        } catch (SQLException e){
+            System.err.println("Erreur lors du calcul du stock : " + e.getMessage());
+            return -1;
         }
     }
 }
