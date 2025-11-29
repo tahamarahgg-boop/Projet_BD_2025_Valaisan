@@ -64,7 +64,6 @@ CREATE TABLE Article (
     idProduit INTEGER NOT NULL,
     modeConditionnement VARCHAR2(50), -- certains articles n'ont pas de conditionnement (produits en vrac)
     poids NUMBER,                     -- Poids du sachet si pré-conditionné, sinon NULL
-    stock NUMBER,                     -- Stock total de l'article (somme des quantiteDisponible des lots)
     prixAchatProducteur NUMBER(10,2), -- Prix d'achat 
     prixVenteClient NUMBER(10,2),  -- Prix de vente 
     delaiDisponibilite NUMBER(5) DEFAULT NULL  ,--pour les articles sur-commande qui ont un delai de disponibilite 
