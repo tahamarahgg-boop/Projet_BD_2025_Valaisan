@@ -1,7 +1,0 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<ProcessModel class="oracle.dbtools.crest.model.design.process.ProcessModel" name="Process Model" id="F93B4EF7-A756-115D-6F1D-E8B9A4E85C59">
-<createdBy>taham</createdBy>
-<createdTime>2025-11-18 08:56:22 UTC</createdTime>
-<ownerDesignName>Valaison_datastructure</ownerDesignName>
-<shouldBeOpen>false</shouldBeOpen>
-</ProcessModel>
