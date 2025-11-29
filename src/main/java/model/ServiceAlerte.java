@@ -9,9 +9,6 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class ServiceAlerte {
-    public enum NaturePerte{
-        PERIME, CASSE, VOL
-    };
 
     private Connection conn;
 
@@ -39,7 +36,7 @@ public class ServiceAlerte {
                 if(nbJourRestant<=0){
                     System.out.printf("PERTE péremption : Article = %d, Lot = %d, Quantité = %d\n",
                         idArticle,idLot,stock);
-                    perte_produit(idLot,stock,NaturePerte.PERIME);   
+                    perte_produit(idLot,stock,"Péremption");   
                 }
                 else{
                     System.out.printf("Article: %d, Quantité: %d — périme dans %d jours\n",
@@ -55,20 +52,37 @@ public class ServiceAlerte {
     }
 
 
-    public void perte_produit(int idLot,int quantitePerdue,NaturePerte nature){
+    public void perte_produit(int idLot,int quantitePerdue,String nature){
         String sql = "UPDATE Lot SET quantiteDisponible = quantiteDisponible - ? WHERE idLot = ?;" +
-         "INSERT INTO Perte (idLot,datePerte,naturePerte,quantitePerdue) Values(?,NOW(),?,?;";
+         "INSERT INTO Perte (idLot,idContenant,datePerte,naturePerte,quantitePerdue) Values(?,NULL,NOW(),?,?);";
         try(PreparedStatement pstmt = conn.prepareStatement(sql)){
             pstmt.setInt(1,quantitePerdue);
             pstmt.setInt(2,idLot);
             pstmt.setInt(3,idLot);
-            pstmt.setString(4,nature_perte(nature));
+            pstmt.setString(4,nature);
             pstmt.setInt(5,quantitePerdue);
             pstmt.executeUpdate();
             conn.commit();
             System.out.println(" Ajout en Perte du produit !");
         } catch (SQLException e){
             System.err.println("Erreur lors de la mise en perte d'un article : " + e.getMessage());
+        }
+    }
+
+    public void perte_contenant(int idContenant,int quantitePerdue,String nature){
+        String sql = "UPDATE Contenant SET stock = stock - ? WHERE idContenant = ?;" +
+          "INSERT INTO Perte (idLot,idContenant,datePerte,naturePerte,quantitePerdue) Values(NULL,?,NOW(),?,?);";
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1,quantitePerdue);
+            pstmt.setInt(2,idContenant);
+            pstmt.setInt(3,idContenant);
+            pstmt.setString(4,nature);
+            pstmt.setInt(5,quantitePerdue);
+            pstmt.executeUpdate();
+            conn.commit();
+            System.out.println(" Ajout en Perte de contenants !");
+        } catch (SQLException e){
+            System.err.println("Erreur lors de la mise en perte de contenant : " + e.getMessage());
         }
     }
 
@@ -88,17 +102,5 @@ public class ServiceAlerte {
         } catch (SQLException e){
             System.err.println("Erreur lors de la réduction du prix d'un article : " + e.getMessage());
         }
-    }
-
-    private String nature_perte(NaturePerte nature){
-        switch(nature){
-            case PERIME:
-                return "PEREMPTION";
-            case CASSE:
-                return "CASSE";
-            default:
-                return "VOL";
-        }
-        
     }
 }
