@@ -116,6 +116,8 @@ CREATE TABLE Adresse (
     idClient INTEGER NOT NULL,
     adressePostale VARCHAR2(200),
     pays VARCHAR2(50),
+    latitude NUMBER(10,2),
+    longitude NUMBER(10,2),
     CONSTRAINT Adresse_PK PRIMARY KEY (idAdresse)
 );
 
