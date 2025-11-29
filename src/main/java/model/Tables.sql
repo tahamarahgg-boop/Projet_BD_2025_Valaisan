@@ -58,6 +58,16 @@ CREATE TABLE Article (
     prixVenteClient NUMBER(10,2),     -- Prix de vente 
     CONSTRAINT Article_PK PRIMARY KEY (idArticle)
 );
+CREATE TABLE Produit_conditionné(
+    idArticle INTEGER UNIQUE
+    modeconditionnement VARCHAR2(50) UNIQUE
+    poids NUMBER,
+    date_Peremption DATE UNIQUE,
+    idProduit INTEGER UNIQUE,
+    TypedatePeremption VARCHAR2(50),
+    CONSTRAINT Produit_conditionné PRIMARY KEY (idArticle, modeConditionnement, poids, date_Peremption, idProduit)
+
+);
 
 CREATE TABLE Contenant (
     idContenant INTEGER NOT NULL,
@@ -166,3 +176,6 @@ ALTER TABLE LigneCommande ADD CONSTRAINT Ligne_Article_FK FOREIGN KEY (idArticle
 -- Liens Saisonnalité
 ALTER TABLE est_de_saison ADD CONSTRAINT Saison_Produit_FK FOREIGN KEY (idProduit) REFERENCES Produit(idProduit);
 ALTER TABLE est_de_saison ADD CONSTRAINT Saison_Dates_FK FOREIGN KEY (dateDebut, dateFin) REFERENCES Saison(dateDebut, dateFin);
+--Liens Produit_Conditionné
+ALTER TABLE Produit_conditionné ADD CONSTRAINT Produit_conditionné_Produit_FK FOREIGN KEY (idProduit) REFERENCES Produit(idProduit);
+ALTER TABLE est_de_saison ADD CONSTRAINT Produit_conditionné_Article_FK FOREIGN KEY (idArticle) REFERENCES Produit(idArticle);
