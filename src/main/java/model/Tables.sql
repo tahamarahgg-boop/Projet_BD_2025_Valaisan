@@ -75,8 +75,14 @@ CREATE TABLE Item (
     typeItem VARCHAR2(20) NOT NULL, -- 'ARTICLE' ou 'CONTENANT'
     idArticle INTEGER,               -- NULL si typeItem = 'CONTENANT'
     idContenant INTEGER,             -- NULL si typeItem = 'ARTICLE'
-    CONSTRAINT Item_PK PRIMARY KEY (idItem)
+    CONSTRAINT Item_PK PRIMARY KEY (idItem),
+    CONSTRAINT chk_Item_Type CHECK (
+        (typeItem = 'ARTICLE' AND idArticle IS NOT NULL AND idContenant IS NULL)
+        OR
+        (typeItem = 'CONTENANT' AND idContenant IS NOT NULL AND idArticle IS NULL)
+    )
 );
+
 
 CREATE TABLE Lot (
     idLot INTEGER GENERATED ALWAYS AS IDENTITY,
@@ -94,13 +100,21 @@ CREATE TABLE Lot (
 );
 
 CREATE TABLE Perte (
-    idPerte INTEGER GENERATED ALWAYS AS IDENTITY, -- ajout idPerte car datePerte n'est pas clé primaire
-    idLot INTEGER NOT NULL,
+    idPerte INTEGER GENERATED ALWAYS AS IDENTITY, 
+    idLot INTEGER NULL,              -- NULL si perte sur contenant
+    idContenant INTEGER NULL,        -- NULL si perte sur lot
     datePerte DATE DEFAULT SYSDATE,
     naturePerte VARCHAR2(100),
     quantitePerdue NUMBER(10,2) CHECK (quantitePerdue >= 0),
-    CONSTRAINT Perte_PK PRIMARY KEY (idPerte)
+    CONSTRAINT Perte_PK PRIMARY KEY (idPerte),
+    CONSTRAINT Perte_Lot_FK FOREIGN KEY (idLot) REFERENCES Lot(idLot),
+    CONSTRAINT Perte_Contenant_FK FOREIGN KEY (idContenant) REFERENCES Contenant(idContenant),
+    CONSTRAINT Chk_Perte_Exclusif CHECK (
+        (idLot IS NOT NULL AND idContenant IS NULL) OR
+        (idLot IS NULL AND idContenant IS NOT NULL)
+    )
 );
+
 
 CREATE TABLE Client (
     idClient INTEGER GENERATED ALWAYS AS IDENTITY,
@@ -116,8 +130,6 @@ CREATE TABLE Adresse (
     idClient INTEGER NOT NULL,
     adressePostale VARCHAR2(200),
     pays VARCHAR2(50),
-    latitude NUMBER(10,2),
-    longitude NUMBER(10,2),
     CONSTRAINT Adresse_PK PRIMARY KEY (idAdresse)
 );
 
