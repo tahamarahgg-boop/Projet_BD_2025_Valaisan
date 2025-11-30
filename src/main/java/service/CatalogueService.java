@@ -26,6 +26,7 @@ public class CatalogueService {
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             System.out.println("\n--- Catalogue ---");
+            System.out.println("\n-- Produits --");
             while (rs.next()) {
                 int idProduit = rs.getInt("Produit.idProduit");
                 String categorieProduit = rs.getString("Produit.categorie");
@@ -38,31 +39,58 @@ public class CatalogueService {
                 System.out.println("");
             }
         } catch (SQLException e) {
-            System.err.println("Erreur lors de la consultation du catalogue : " + e.getMessage());
+            System.err.println("Erreur lors de la consultation du catalogue des produits : " + e.getMessage());
+        }
+
+        System.out.println("\n-- Contenants --");
+        String sql2 = "SELECT Item.idItem, Contenant.typeContenant, Contenant.capacite, Contenant.reutilisable, Contenant.stock, Contenant.prixVente " +
+            "FROM Item, Contenant WHERE Item.idContenant = Contenant.idContenant";
+        try (Statement stmt2 = conn.createStatement();
+             ResultSet rs2 = stmt2.executeQuery(sql)){
+            while(rs2.next()){
+                int reutilisable = rs2.getInt("Contenant.reutilisable");
+                String est_reutilisable;
+                if(reutilisable == 1){
+                    est_reutilisable = "Reutilisable";
+                }
+                else{
+                    est_reutilisable = "Non Reutilisable";
+                }
+                System.out.printf("Id: %d, Type: %s, Capacite: %f, %s --> Prix: %f, Stock: %f\n",
+                    rs2.getInt("Item.idItem"),
+                    rs2.getString("Contenant.typeContenant"),
+                    rs2.getFloat("Contenant.capacite"),
+                    est_reutilisable,
+                    rs2.getFloat("Contenant.prixVente"),
+                    rs2.getFloat("Contenant.stock"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la consultation du catalogue des contenants : " + e.getMessage());
         }
     }
 
 
     public void getArticles_Produit(int idProduit){
-        String sql = "SELECT idArticle, modeConditionnement, poids, prixVenteClient" +
-            "FROM Article WHERE Article.idProduit = ?";
+        String sql = "SELECT Item.idItem, Article.idArticle, Article.modeConditionnement, Article.poids, Article.prixVenteClient" +
+            "FROM Article, Item WHERE Item.idArticle = Article.idArticle AND Article.idProduit = ?";
         try(PreparedStatement pstmt = conn.prepareStatement(sql)){
             pstmt.setInt(1,idProduit);
             ResultSet rs = pstmt.executeQuery();
             while(rs.next()) {
-                int idArticle = rs.getInt("idArticle");
-                String modeConditionnement = rs.getString("modeConditionnement");
+                int idItem = rs.getInt("Item.idItem");
+                int idArticle = rs.getInt("Article.idArticle");
+                String modeConditionnement = rs.getString("Article.modeConditionnement");
                 boolean est_vrac = modeConditionnement.equals("Vrac");
-                float prix = rs.getFloat("prixVenteClient");
+                float prix = rs.getFloat("Article.prixVenteClient");
                 float stock = getStock_Article(idArticle);
                 if(!est_vrac){
-                    float poids = rs.getFloat("poids");
-                    System.out.printf(" - Id: %d, Article: %s de %f, PrixUnitaire: %f, Stock: %f\n",
-                        idArticle,modeConditionnement,poids,prix,stock);
+                    float poids = rs.getFloat("Article.poids");
+                    System.out.printf(" - Id: %d, Article: %s de %f --> PrixUnitaire: %f, Stock: %f\n",
+                        idItem,modeConditionnement,poids,prix,stock);
                 }
                 else{
-                    System.out.printf(" - Id: %d, En vrac, Prix: %f/kg, Stock: %f\n",
-                        idArticle,prix,stock);
+                    System.out.printf(" - Id: %d, En vrac --> Prix: %f/kg, Stock: %f\n",
+                        idItem,prix,stock);
                 }
             }
         } catch (SQLException e){
