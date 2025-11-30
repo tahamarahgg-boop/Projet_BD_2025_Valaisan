@@ -12,7 +12,7 @@ public class ServiceCatalogue {
     // --- AFFICHAGE (Catalogue/Alertes) ---
 
     private static void consulterCatalogue(Connection conn) {
-        String sql = "SELECT i.idItem, i.typeItem, p.nom, a.modeConditionnement, a.prixVenteClient, c.typeContenant, c.capacite, c.prixVente, c.stock," +
+        String sql = "SELECT i.idItem, i.typeItem, p.nom, a.modeConditionnement, a.prixVenteClient, c.typeContenant, c.capacite, c.prixVente, c.stock, " +
                      "(SELECT SUM(quantiteDisponible) FROM Lot WHERE idArticle = a.idArticle) as stk " +
                      "FROM Item i LEFT JOIN Article a ON i.idArticle=a.idArticle LEFT JOIN Produit p ON a.idProduit=p.idProduit " +
                      "LEFT JOIN Contenant c ON i.idContenant=c.idContenant ORDER BY i.idItem";
