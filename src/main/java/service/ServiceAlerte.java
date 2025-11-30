@@ -89,7 +89,7 @@ public class ServiceAlerte {
     }
 
     private void reduction_peremption(int idLot,int nbJourRestant){
-        String sql = "UPDATE Lot SET reduction = ? WHERE idLot = ?";
+        String sql = "UPDATE Lot SET pourcentageReduction = ? WHERE idLot = ?";
         try(PreparedStatement pstmt = conn.prepareStatement(sql)){
             if(nbJourRestant>3){
                 pstmt.setInt(1, 30);

@@ -57,7 +57,8 @@ CREATE TABLE Produit (
 CREATE TABLE Contenant (
     idContenant INTEGER GENERATED ALWAYS AS IDENTITY,
     typeContenant VARCHAR2(50) NOT NULL,
-    capacite NUMBER(10,3),--litres ou grammes selon le type
+    capacite NUMBER(10,3),--capacite du contenant en fonction de unite
+    unite VARCHAR(2), -- unite de la capacite
     reutilisable NUMBER(1) CHECK (reutilisable IN (0,1)), -- Booléen simulé
     stock INTEGER, -- Gestion du stock des contenants
     prixVente NUMBER(10,2),
@@ -72,7 +73,7 @@ CREATE TABLE Article (
     poids NUMBER,                     -- Poids du sachet si pré-conditionné, sinon NULL
     prixAchatProducteur NUMBER(10,2), -- Prix d'achat 
     prixVenteClient NUMBER(10,2),  -- Prix de vente 
-    delaiDisponibilite NUMBER(5) DEFAULT NULL  ,--pour les articles sur-commande qui ont un delai de disponibilite 
+    delaiDisponibilite INTEGER DEFAULT 0  ,--pour les articles sur-commande qui ont un delai de disponibilite 
     CONSTRAINT Article_PK PRIMARY KEY (idArticle)
 );
 
@@ -98,7 +99,6 @@ CREATE TABLE Lot (
     quantiteDisponible NUMBER(10,2) NOT NULL CHECK (quantiteDisponible >= 0),
     datePeremption DATE,
     typePeremption VARCHAR2(4),
-    prixLot NUMBER(10,2),               -- prix spécifique au lot
     pourcentageReduction NUMBER(5,2) DEFAULT 0,  -- % de réduction automatique
     CONSTRAINT Lot_PK PRIMARY KEY (idLot),
     CONSTRAINT Lot_Unique_Livraison UNIQUE (idArticle, dateReception),
