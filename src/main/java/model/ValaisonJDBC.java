@@ -168,94 +168,23 @@ public class ValaisonJDBC {
             scanner.nextLine(); // consomme le retour à la ligne
 
             switch (choix) {
-                case 1 -> consulterCatalogue(conn);
+                case 1 -> {
+                    CatalogueService catalogue = new CatalogueService(conn);
+                    catalogue.consulterCatalogue();
+                    }
                 case 2 -> {
                     ServiceCommande comm=new ServiceCommande();
                     comm.passerCommandeDebut(id);
                     }
-                case 3 -> consulterAlertes();
+                case 3 -> {
+                    ServiceAlerte alerte = new ServiceAlerte(conn);
+                    alerte.consulterAlerte();
+                    }
                 case 4 -> cloturerCommande(scanner);
                 case 0 -> System.out.println(" Au revoir !");
                 default -> System.out.println(" Choix invalide.");
             }
         } while (choix != 0);
-    }
-
-    // Consultation du catalogue
-    private static void consulterCatalogue(Connection conn) {
-        String sql = "SELECT a.idArticle, p.nom, p.categorie, a.modeConditionnement, a.prixVenteClient, " +
-                    // On utilise COALESCE pour afficher 0 au lieu de NULL si stock vide
-                    "COALESCE(SUM(l.quantiteDisponible), 0) AS quantiteTotale " + 
-                    "FROM Article a " +
-                    "JOIN Produit p ON a.idProduit = p.idProduit " +
-                    "LEFT JOIN Lot l ON a.idArticle = l.idArticle " +
-                    "GROUP BY a.idArticle, p.nom, p.categorie, a.modeConditionnement, a.prixVenteClient " +
-                    "ORDER BY p.nom";
-
-        try (Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql)) {
-            String separateur = "+-------+---------------------------+-----------------+-----------------+------------+------------------+";
-            System.out.println("\n--- 🛒 CATALOGUE DES PRODUITS ---");
-            System.out.println(separateur);
-            // En-tête du tableau pour faire joli
-            System.out.printf("| %-5s | %-25s | %-15s | %-15s | %-10s | %-16s |\n", 
-                      "ID", "Nom", "Catégorie", "Condit.", "Prix", "Disponibilité");
-            System.out.println(separateur);
-            while (rs.next()) {
-                System.out.printf("%-5d | %-25.25s | %-15.15s | %-15.15s | %10f |%-16s \n",
-                        rs.getInt("idArticle"),
-                        rs.getString("nom"),
-                        rs.getString("categorie"),
-                        rs.getString("modeConditionnement"),
-                        rs.getDouble("prixVenteClient"),
-                        rs.getDouble("quantiteTotale")
-                );
-            }
-           System.err.println(separateur);
-           System.err.println("");
-
-        } catch (SQLException e) {
-            System.err.println(" Erreur lors de la consultation du catalogue : " + e.getMessage());
-        }
-    }
-
-    private static int genererNouvelId(Connection conn, String table, String colonneId) throws SQLException {
-        String sql = "SELECT MAX(" + colonneId + ") FROM " + table;
-        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
-            if (rs.next()) {
-                return rs.getInt(1) + 1;
-            }
-        }
-        return 1; // Si la table est vide, on commence à 1
-    }
-
-    private static double getPrixArticle(Connection conn, int idArticle) throws SQLException {
-        String sql = "SELECT prixVenteClient FROM Article WHERE idArticle = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, idArticle);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) return rs.getDouble("prixVenteClient");
-        }
-        return 0.0;
-    }
-
-
-    // Alertes de péremption
-    private static void consulterAlertes() {
-        String sql = "SELECT nom, date_peremption FROM produits WHERE date_peremption < NOW() + INTERVAL 7 DAY";
-        try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            System.out.println("\n--- Produits proches de la péremption ---");
-            boolean vide = true;
-            while (rs.next()) {
-                System.out.printf(" %s — périme le %s\n",
-                        rs.getString("nom"), rs.getDate("date_peremption"));
-                vide = false;
-            }
-            if (vide) System.out.println("Aucune alerte pour le moment.");
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la consultation des alertes : " + e.getMessage());
-        }
     }
 
     // Clôturer une commande
