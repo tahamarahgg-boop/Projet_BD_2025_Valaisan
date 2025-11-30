@@ -82,7 +82,7 @@ CREATE TABLE CaracteristiqueProduit (
     idProduit INTEGER NOT NULL,
     caracteristique VARCHAR2(50) NOT NULL,
     CONSTRAINT Caracteristique_PK PRIMARY KEY (idProduit, caracteristique),
-    CONSTRAINT Caracteristique_PK FOREIGN KEY (idProduit) REFERENCES Produit(idProduit)
+    CONSTRAINT Caracteristique_FK FOREIGN KEY (idProduit) REFERENCES Produit(idProduit)
 );
 
 CREATE TABLE Adresse (
@@ -155,7 +155,7 @@ CREATE TABLE Lot (
     quantiteInitiale NUMBER(10,2) NOT NULL CHECK (quantiteInitiale >= 0),
     quantiteDisponible NUMBER(10,2) NOT NULL CHECK (quantiteDisponible >= 0),
     datePeremption DATE,
-    typePeremption VARCHAR2(4) CHECK (typePeremption IN ('DLC', 'DLUO'),
+    typePeremption VARCHAR2(4) CHECK (typePeremption IN ('DLC', 'DLUO')),
     pourcentageReduction NUMBER(5,2) DEFAULT 0,
     CONSTRAINT Lot_PK PRIMARY KEY (idLot),
     CONSTRAINT Lot_Art_FK FOREIGN KEY (idArticle) REFERENCES Article(idArticle)
