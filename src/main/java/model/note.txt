@@ -1,0 +1,20 @@
+fcts retrait et modelivraison à la fin avec mise à jour du status 
+
+1 - entrer les articles 
+2- verifier la disponibilité ok passe à 3 sinon erreur
+3- Demander le payment et creer commande avec status EN Preparation ayant la possibilité de l'annuler
+4- Gerer le status selon mode recup 
+   a- Retrait en boutique : on attend le staff à changer le status à Prete et Gestion du stock
+   b- Livraion :    Calcule frais de livraison finaux .
+                    le staff change le status à En livraison après expedition ,
+5- changer le status si la commande est recue par le client ou si il vient la recuperer
+
+
+// produits disponibles donc on cree la commande avec status En Preparation 
+                // D'abord on demande le paiement 
+            System.out.println("\n--- MODE DE PAIEMENT ---");
+            System.out.println(" - Tapez 'En ligne'");
+            System.out.println(" - Tapez 'En boutique'");
+            System.out.print("Votre choix : ");
+            Scanner scanner=new Scanner(System.in);
+            String modePaiement = scanner.nextLine();

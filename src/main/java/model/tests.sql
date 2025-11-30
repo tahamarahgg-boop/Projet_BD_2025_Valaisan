@@ -1,100 +1,138 @@
 /* ============================================================
-   Fichier : donnees_test.sql
-   Description : Jeu de données pour tester le Projet BD 2025
-   Compatibilité : Oracle
+   SCRIPT DE PEUPLEMENT COMPLET - PROJET EPICERIE
+   Version compatible avec la table ITEM et ACTIVITES
    ============================================================ */
 
--- 1. PRODUCTEURS [cite: 15]
--- On crée deux producteurs avec des profils différents
-INSERT INTO Producteur (idProducteur, nom, adresse, longitude, latitude, typeActivite) 
-VALUES (1, 'Ferme des Alpes', '12 Route du Vert, 38000 Grenoble', 5.72, 45.18, 'Agriculteur');
+-- 1. PRODUCTEURS
+INSERT INTO Producteur (nom, adresse, longitude, latitude, mail, telephone) VALUES 
+('Ferme des Alpes', '120 Chemin du Vercors, 38250 Villard-de-Lans', 5.5342, 45.0718, 'contact@fermealpes.fr', '0476000001');
+INSERT INTO Producteur (nom, adresse, longitude, latitude, mail, telephone) VALUES 
+('Laiterie du Mont', 'Route des Cimes, 74000 Annecy', 6.1292, 45.8992, 'info@laiterie.fr', '0450000002');
+INSERT INTO Producteur (nom, adresse, longitude, latitude, mail, telephone) VALUES 
+('Moulins Bio', 'Zone Artisanale, 26000 Valence', 4.8917, 44.9333, 'bio@moulins.fr', '0475000003');
+INSERT INTO Producteur (nom, adresse, longitude, latitude, mail, telephone) VALUES 
+('Import Exotique', 'Port de Marseille', 5.3698, 43.2965, 'contact@import.fr', '0491000004');
 
-INSERT INTO Producteur (idProducteur, nom, adresse, longitude, latitude, typeActivite) 
-VALUES (2, 'BioVrac 38', '45 Avenue de la Gare, 38500 Voiron', 5.60, 45.36, 'Grossiste');
+-- 2. ACTIVITÉS DES PRODUCTEURS
+INSERT INTO ActiviteProducteur (idProducteur, nomActivite) VALUES (1, 'Maraicher');
+INSERT INTO ActiviteProducteur (idProducteur, nomActivite) VALUES (1, 'Eleveur'); -- Double activité
+INSERT INTO ActiviteProducteur (idProducteur, nomActivite) VALUES (2, 'Fromager');
+INSERT INTO ActiviteProducteur (idProducteur, nomActivite) VALUES (3, 'Céréalier');
+INSERT INTO ActiviteProducteur (idProducteur, nomActivite) VALUES (4, 'Importateur');
 
--- 2. PRODUITS (Les définitions génériques) [cite: 17]
--- Produit 1 : Pommes (Saisonnier)
-INSERT INTO Produit (idProduit, idProducteur, nom, categorie, description) 
-VALUES (10, 1, 'Pommes Golden', 'Fruits', 'Pommes sucrées et croquantes locales.');
+-- 3. SAISONS (Année 2025-2026)
+INSERT INTO Saison (dateDebut, dateFin) VALUES (TO_DATE('01/01/2025','DD/MM/YYYY'), TO_DATE('31/12/2025','DD/MM/YYYY')); -- Année
+INSERT INTO Saison (dateDebut, dateFin) VALUES (TO_DATE('21/03/2025','DD/MM/YYYY'), TO_DATE('20/06/2025','DD/MM/YYYY')); -- Printemps
+INSERT INTO Saison (dateDebut, dateFin) VALUES (TO_DATE('21/06/2025','DD/MM/YYYY'), TO_DATE('20/09/2025','DD/MM/YYYY')); -- Été
+INSERT INTO Saison (dateDebut, dateFin) VALUES (TO_DATE('21/09/2025','DD/MM/YYYY'), TO_DATE('20/12/2025','DD/MM/YYYY')); -- Automne
+INSERT INTO Saison (dateDebut, dateFin) VALUES (TO_DATE('21/12/2025','DD/MM/YYYY'), TO_DATE('20/03/2026','DD/MM/YYYY')); -- Hiver
 
--- Produit 2 : Lentilles (Disponible en Vrac et Sachet) [cite: 28]
-INSERT INTO Produit (idProduit, idProducteur, nom, categorie, description) 
-VALUES (20, 2, 'Lentilles Vertes', 'Légumineuses', 'Lentilles riches en fer.');
+-- 4. CLIENTS & ADRESSES
+-- Client 1 : Local
+INSERT INTO Client (mail, nom, prenom, telephone) VALUES ('jean.dupont@mail.com', 'Dupont', 'Jean', '0601010101');
+INSERT INTO Adresse (idClient, adressePostale, pays, latitude, longitude) VALUES (1, '10 Cours Berriat, 38000 Grenoble', 'France', 45.1885, 5.7245);
 
--- Produit 3 : Jus de Pomme (Produit transformé)
-INSERT INTO Produit (idProduit, idProducteur, nom, categorie, description) 
-VALUES (30, 1, 'Jus de Pomme Artisanal', 'Boisson', 'Pur jus sans conservateurs.');
+-- Client 2 : Parisien
+INSERT INTO Client (mail, nom, prenom, telephone) VALUES ('marie.curie@science.fr', 'Curie', 'Marie', '0602020202');
+INSERT INTO Adresse (idClient, adressePostale, pays, latitude, longitude) VALUES (2, '5 Rue de Rivoli, 75001 Paris', 'France', 48.8566, 2.3522);
 
--- 3. SAISONNALITÉ [cite: 20]
--- Les pommes sont de saison de Septembre à Décembre
-INSERT INTO Saison (dateDebut, dateFin) VALUES (TO_DATE('01/09/2025','DD/MM/YYYY'), TO_DATE('31/12/2025','DD/MM/YYYY'));
-INSERT INTO est_de_saison (idProduit, dateDebut, dateFin) VALUES (10, TO_DATE('01/09/2025','DD/MM/YYYY'), TO_DATE('31/12/2025','DD/MM/YYYY'));
+-- 5. CONTENANTS & ITEMS
+-- Bocal (Contenant 1 -> Item 1)
+INSERT INTO Contenant (typeContenant, capacite, reutilisable, stock, prixVente) VALUES ('Bocal Verre', 1.0, 1, 50, 2.50);
+INSERT INTO Item (typeItem, idContenant) VALUES ('CONTENANT', 1);
 
--- 4. ARTICLES (Ce qu'on vend réellement) [cite: 24, 25, 27]
--- Article 100 : Pommes en Vrac
-INSERT INTO Article (idArticle, idProduit, modeConditionnement, poids, prixAchatProducteur, prixVenteClient) 
-VALUES (100, 10, 'Vrac', NULL, 1.50, 3.00); 
+-- Sac Tissu (Contenant 2 -> Item 2)
+INSERT INTO Contenant (typeContenant, capacite, reutilisable, stock, prixVente) VALUES ('Sac Coton Bio', 0.0, 1, 100, 1.50);
+INSERT INTO Item (typeItem, idContenant) VALUES ('CONTENANT', 2);
 
--- Article 200 : Lentilles en Vrac
-INSERT INTO Article (idArticle, idProduit, modeConditionnement, poids, prixAchatProducteur, prixVenteClient) 
-VALUES (200, 20, 'Vrac', NULL, 2.00, 5.00);
+-- Sachet Papier (Contenant 3 -> Item 3)
+INSERT INTO Contenant (typeContenant, capacite, reutilisable, stock, prixVente) VALUES ('Sachet Kraft', 0.0, 0, 500, 0.10);
+INSERT INTO Item (typeItem, idContenant) VALUES ('CONTENANT', 3);
 
--- Article 201 : Lentilles en Sachet de 500g (Pré-conditionné)
-INSERT INTO Article (idArticle, idProduit, modeConditionnement, poids, prixAchatProducteur, prixVenteClient) 
-VALUES (201, 20, 'Sachet', 0.5, 1.80, 3.50);
 
--- Article 300 : Bouteille de Jus
-INSERT INTO Article (idArticle, idProduit, modeConditionnement, poids, prixAchatProducteur, prixVenteClient) 
-VALUES (300, 30, 'Bouteille', 1.0, 2.50, 4.50);
+-- 6. PRODUITS (Abstraits)
+INSERT INTO Produit (idProducteur, nom, categorie, description) VALUES (1, 'Pommes Golden', 'Fruits', 'Pommes locales sucrées.');
+INSERT INTO Produit (idProducteur, nom, categorie, description) VALUES (2, 'Reblochon', 'Produits Laitiers', 'AOP au lait cru.');
+INSERT INTO Produit (idProducteur, nom, categorie, description) VALUES (3, 'Lentilles Vertes', 'Légumineuses', 'Riches en fer.');
+INSERT INTO Produit (idProducteur, nom, categorie, description) VALUES (4, 'Café Grains', 'Boissons', 'Arabica torréfié.');
 
--- 5. LOTS (Stocks) [cite: 36, 41]
--- Note : On utilise SYSDATE pour que les tests marchent quelle que soit la date d'exécution.
+-- 7. ARTICLES (Concrets) & ITEMS
 
--- Lot 1 : Pommes reçues il y a 2 jours, périment dans 20 jours (OK)
-INSERT INTO Lot (idLot, idArticle, dateReception, quantiteDisponible, datePeremption, typePeremption) 
-VALUES (1, 100, SYSDATE - 2, 50.0, SYSDATE + 20, 'DLC');
+-- Article 1 : Pommes en Vrac (Produit 1) -> Item 4
+INSERT INTO Article (idProduit, modeConditionnement, poids, prixAchatProducteur, prixVenteClient) 
+VALUES (1, 'Vrac', NULL, 1.00, 2.50);
+INSERT INTO Item (typeItem, idArticle) VALUES ('ARTICLE', 1);
 
--- Lot 2 : Lentilles Vrac (DLUO lointaine)
-INSERT INTO Lot (idLot, idArticle, dateReception, quantiteDisponible, datePeremption, typePeremption) 
-VALUES (2, 200, SYSDATE - 10, 100.0, SYSDATE + 365, 'DLUO');
+-- Article 2 : Reblochon Unité (Produit 2) -> Item 5
+INSERT INTO Article (idProduit, modeConditionnement, poids, prixAchatProducteur, prixVenteClient) 
+VALUES (2, 'Unité', 0.450, 3.50, 6.00);
+INSERT INTO Item (typeItem, idArticle) VALUES ('ARTICLE', 2);
 
--- Lot 3 : Un lot de sachets qui va périmer BIENTÔT (Pour tester l'alerte )
--- Périme dans 4 jours (< 7 jours)
-INSERT INTO Lot (idLot, idArticle, dateReception, quantiteDisponible, datePeremption, typePeremption) 
-VALUES (3, 201, SYSDATE - 30, 10, SYSDATE + 4, 'DLUO');
+-- Article 3 : Lentilles Vrac (Produit 3) -> Item 6
+INSERT INTO Article (idProduit, modeConditionnement, poids, prixAchatProducteur, prixVenteClient) 
+VALUES (3, 'Vrac', NULL, 1.50, 3.00);
+INSERT INTO Item (typeItem, idArticle) VALUES ('ARTICLE', 3);
 
--- 6. CLIENTS & ADRESSES [cite: 47, 48]
-INSERT INTO Client (idClient, mail, nom, prenom, telephone) 
-VALUES (1, 'jean.dupont@email.com', 'Dupont', 'Jean', '0601020304');
+-- Article 4 : Lentilles Sachet 500g (Produit 3) -> Item 7
+INSERT INTO Article (idProduit, modeConditionnement, poids, prixAchatProducteur, prixVenteClient) 
+VALUES (3, 'Sachet 500g', 0.500, 2.00, 4.50);
+INSERT INTO Item (typeItem, idArticle) VALUES ('ARTICLE', 4);
 
-INSERT INTO Adresse (idAdresse, idClient, adressePostale, pays) 
-VALUES (1, 1, '10 Rue des Lilas, 38000 Grenoble', 'France');
+-- Article 5 : Café (Sur commande) (Produit 4) -> Item 8
+INSERT INTO Article (idProduit, modeConditionnement, poids, prixAchatProducteur, prixVenteClient, delaiDisponibilite) 
+VALUES (4, 'Paquet 1kg', 1.000, 10.00, 18.00, 7);
+INSERT INTO Item (typeItem, idArticle) VALUES ('ARTICLE', 5);
 
-INSERT INTO Client (idClient, mail, nom, prenom, telephone) 
-VALUES (2, 'marie.curie@science.fr', 'Curie', 'Marie', '0699887766');
+-- 8. SAISONNALITÉ
+INSERT INTO est_de_saison (idProduit, dateDebut, dateFin) VALUES (1, TO_DATE('21/09/2025','DD/MM/YYYY'), TO_DATE('20/12/2025','DD/MM/YYYY'));
+INSERT INTO est_de_saison (idProduit, dateDebut, dateFin) VALUES (1, TO_DATE('21/12/2025','DD/MM/YYYY'), TO_DATE('20/03/2026','DD/MM/YYYY'));
+INSERT INTO est_de_saison (idProduit, dateDebut, dateFin) VALUES (2, TO_DATE('01/01/2025','DD/MM/YYYY'), TO_DATE('31/12/2025','DD/MM/YYYY'));
+INSERT INTO est_de_saison (idProduit, dateDebut, dateFin) VALUES (3, TO_DATE('01/01/2025','DD/MM/YYYY'), TO_DATE('31/12/2025','DD/MM/YYYY'));
+INSERT INTO est_de_saison (idProduit, dateDebut, dateFin) VALUES (4, TO_DATE('01/01/2025','DD/MM/YYYY'), TO_DATE('31/12/2025','DD/MM/YYYY'));
 
-INSERT INTO Adresse (idAdresse, idClient, adressePostale, pays) 
-VALUES (2, 2, '25 Avenue Jean Jaures, 75000 Paris', 'France');
+-- 9. LOTS (Stocks)
+-- Pommes Vrac (Article 1)
+INSERT INTO Lot (idArticle, dateReception, quantiteInitiale, quantiteDisponible, datePeremption, typePeremption, prixLot) 
+VALUES (1, SYSDATE-2, 100, 80, SYSDATE+10, 'DLUO', 2.50);
 
--- 7. COMMANDES (Historique) [cite: 54, 55]
--- Commande 1 : Terminée (Jean Dupont)
-INSERT INTO Commande (idCommande, idClient, idAdresseLivraison, dateCommande, statut, modePaiement, modeRecuperation, fraisLivraison, montantTotal) 
-VALUES (1001, 1, 1, SYSDATE - 5, 'Livrée', 'Carte', 'Livraison', 5.00, 35.00);
+INSERT INTO Lot (idArticle, dateReception, quantiteInitiale, quantiteDisponible, datePeremption, typePeremption, prixLot, pourcentageReduction) 
+VALUES (1, SYSDATE-10, 50, 20, SYSDATE+2, 'DLUO', 2.50, 30); -- Lot en promo
 
--- Lignes de la commande 1 [cite: 61]
-INSERT INTO LigneCommande (idLigne, idCommande, idArticle, quantite, prixUnitaireApplique) 
-VALUES (1, 1001, 201, 2, 3.50); -- 2 Sachets de lentilles
+-- Reblochon (Article 2)
+INSERT INTO Lot (idArticle, dateReception, quantiteInitiale, quantiteDisponible, datePeremption, typePeremption, prixLot) 
+VALUES (2, SYSDATE-5, 30, 30, SYSDATE+20, 'DLC', 6.00);
 
--- Commande 2 : En cours de préparation (Marie Curie)
-INSERT INTO Commande (idCommande, idClient, idAdresseLivraison, dateCommande, statut, modePaiement, modeRecuperation, fraisLivraison, montantTotal) 
-VALUES (1002, 2, 2, SYSDATE, 'En préparation', 'Carte', 'Livraison', 8.00, 4.50);
+-- Lentilles Vrac (Article 3)
+INSERT INTO Lot (idArticle, dateReception, quantiteInitiale, quantiteDisponible, datePeremption, typePeremption, prixLot) 
+VALUES (3, SYSDATE-30, 200, 150, SYSDATE+365, 'DLUO', 3.00);
 
-INSERT INTO LigneCommande (idLigne, idCommande, idArticle, quantite, prixUnitaireApplique) 
-VALUES (2, 1002, 300, 1, 4.50); -- 1 Jus de pomme
+-- Lentilles Sachet (Article 4) : Rupture de stock
+INSERT INTO Lot (idArticle, dateReception, quantiteInitiale, quantiteDisponible, datePeremption, typePeremption, prixLot) 
+VALUES (4, SYSDATE-60, 20, 0, SYSDATE+100, 'DLUO', 4.50);
 
--- 8. PERTES (Pour tester la comptabilité) [cite: 45]
--- On a cassé 1 sachet de lentilles du lot 3 hier
-INSERT INTO Perte (idPerte, idLot, datePerte, naturePerte, quantitePerdue) 
-VALUES (1, 3, SYSDATE - 1, 'Casse', 1);
+-- 10. COMMANDES & LIGNES (Avec ID ITEM)
+-- Commande 1 : Jean (Livrée)
+INSERT INTO Commande (idClient, idAdresseLivraison, dateCommande, statut, modePaiement, modeRecuperation, fraisLivraison, montantTotal)
+VALUES (1, 1, SYSDATE-5, 'Livrée', 'Carte', 'Livraison', 5.00, 15.00);
+
+-- Lignes de la commande 1
+-- Achat de Pommes (Article 1 -> Item 4)
+INSERT INTO LigneCommande (idCommande, idItem, quantite, prixUnitaireApplique) VALUES (1, 4, 2.0, 2.50); 
+-- Achat d'un Bocal (Contenant 1 -> Item 1)
+INSERT INTO LigneCommande (idCommande, idItem, quantite, prixUnitaireApplique) VALUES (1, 1, 1.0, 2.50);
+
+
+-- Commande 2 : Marie (En préparation)
+INSERT INTO Commande (idClient, idAdresseLivraison, dateCommande, statut, modePaiement, modeRecuperation, fraisLivraison, montantTotal)
+VALUES (2, 2, SYSDATE, 'En préparation', 'Carte', 'Livraison', 8.00, 12.00);
+
+-- Lignes de la commande 2
+-- Achat de Reblochon (Article 2 -> Item 5)
+INSERT INTO LigneCommande (idCommande, idItem, quantite, prixUnitaireApplique) VALUES (2, 5, 2.0, 6.00);
+
+
+-- 11. PERTES
+INSERT INTO Perte (idContenant, naturePerte, quantitePerdue) VALUES (1, 'Casse Rayon', 1);
+INSERT INTO Perte (idLot, naturePerte, quantitePerdue) VALUES (1, 'Pourri', 5.0);
 
 COMMIT;

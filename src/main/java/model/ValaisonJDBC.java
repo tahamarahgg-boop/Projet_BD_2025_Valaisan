@@ -1,277 +1,264 @@
+package model;
+
 import java.sql.*;
-import java.nio.file.*;
-import java.io.IOException;
 import java.util.Scanner;
 
-import javax.print.DocFlavor.STRING;
-
-import java.util.ArrayList;
-
 public class ValaisonJDBC {
-    private static final String URL = "jdbc:oracle:thin:@oracle1:1521:oracle1";
-    private static final String USER = "lahmouza";
-    private static final String PASSWORD = "lahmouza";
-
-    private static Connection conn;
+    
+    // --- CONFIGURATION DE LA CONNEXION ---
+    private static final String URL = "jdbc:oracle:thin:@localhost:1521:XE";
+    private static final String USER = "system";     // Utilisateur validé ensemble
+    private static final String PASSWORD = "lahmouza"; // Mot de passe validé ensemble
 
     public static void main(String[] args) {
         try {
+            // Chargement du driver Oracle
             Class.forName("oracle.jdbc.OracleDriver");
-            conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println(" Connecté à la base de données.");
-
-            System.out.print("🔹 Veuillez entrer votre ID Client : ");
-            Scanner scanner=new Scanner(System.in);
-            String input = scanner.nextLine();
-            int id = Integer.parseInt(input);
-
             
-            menuPrincipal(conn,id);
+            // Connexion à la base
+            Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("[OK] Connecte a la base de donnees.");
 
+            // Initialisation du scanner pour les entrées clavier
+            Scanner scanner = new Scanner(System.in);
+            
+            System.out.print("Veuillez entrer votre ID Client : ");
+            if (scanner.hasNextInt()) {
+                int idClient = scanner.nextInt();
+                scanner.nextLine(); // Consommer le saut de ligne restant
+                
+                // Lancement du menu principal
+                menuPrincipal(conn, scanner, idClient);
+            } else {
+                System.out.println("[ERREUR] ID invalide (doit etre un nombre).");
+            }
+
+            // Fermeture propre
             conn.close();
+            scanner.close();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-/* 
 
-    private boolean est_disponible(int idArticle,int quantite,String cond){
-        // STOCK 
-        String query="SELECT QUANTITE FROM Article a JOIN Lot l WHERE idArticle = ? AND a.modeConditionnement=?";
+    // --- MENU PRINCIPAL ---
+    private static void menuPrincipal(Connection conn, Scanner scanner, int idClient) {
+        // Instanciation des services métiers
+        ServiceCommande serviceCreation = new ServiceCommande();
+        CloturerCommande serviceGestion = new CloturerCommande();
 
-        PreparedStatement stmt=conn.prepareStatement(query);
-        stmt.setInt(1,idArticle);
-        stmt.setString(2,cond);
-        ResultSet res=stmt.executeQuery();
-        if (res.next()){
-            if (res.getInt("quantite")>quantite){
-                return true;
-            }
-            else{
-                System.out.println("stock insuffisant");
-                return false;
-            }
-        }
-        // Saisonalité
-        else{
-            String query2="SELECT Saison_dateDebut , Saison_dateFin FROM est_de_saison e JOIN Article a WHERE e.idProduit=a.idProduit and a.idProduit=? and a.modeConditionnement=? ";
-            PreparedStatement stmt2=conn.prepareStatement(query2);
-            stmt2.setInt(prod);
-            stmt2.setString(2,cond);
-            ResultSet res=stmt2.executeQuery();
-            System.out.println("la prochaine période de dispo est"+(res.next()).getDate("Data_debut") +":"+(res.next()).getDate("Date_fin"));
-            return false;
-    }
-    }
-    private int frais_livraison(int distance, int poids, String pays) {
-        int frais = 5; // frais de base
-
-        // coût en fonction de la distance et du poids
-        frais += (int)(distance * 0.5);
-        frais += (int)(poids * 0.2);
-
-        // supplément pour l'international
-        if (!pays.equalsIgnoreCase("France")) {
-            frais += 10;
-        }
-
-        return frais;
-    }
-    public int montant_commande(ArrayList<Integer> id_produits){
-        /*
-        String query ="SELECT LIGNE_COMMANDES FROM COMMANDE WHERE COMMANDE_ID=?";
-        // calcule frais de livraison si c'est dans la table
-        PreparedStatement stmt=conn.prepareStatement(query);
-        stmt.setInt(1,id);
-        ResultSet res=stmt.executeQuery();
-        while (res.next()){
-            int prod_id=res.getInt("prod_id");
-            int quant=res.getInt("quantite");
-            // mode cnd à partir de prod_id
-            String mode_cnd;
-            if (est_disponible(prod_id,quant,mode_cnd)){
-
-            }
-        }
-        */
-       
-    /*     int montant_total=0;
-        for (int i=0;i<id_produits.size();i++){
-            int id=id_produits.get(i);
-            // obtenir le prix total du produit commandé
-            String query="SELECT prixUnitaire from Produit p JOIN Article a where p.idProduit=a.idProduit and a.idProduit=?";
-            PreparedStatement stmt=conn.prepareStatement(query);
-            stmt.setInt(1,id);
-            ResultSet res=stmt.executeQuery();
-            montant_total+=res.next().getInt("prixUnitaire");
-            // ajouter les frais de livraison qui dependent de la localisation 
-            // et la quantite commandée
-            montant_total+=frais_livraison(i, id, query);
-        }
-        return montant_total;
-    } */
-    // pour la gestion du stock on fait un rollback au debut pour annuler les modifications 
-    // si on veut
-/* *\ */
-
-/*    int c=1;
-    public void creer_commande(int id_client, String moderecup, String mode_livr, int montant,int frais_livraison){
-
-        String query = "INSERT INTO COMMANDE (idCommande,date_commande, id_client, montant, mode_recup, mode_livr,status,fraisLivraison) "
-                    + "VALUES (NOW(), ?, ?, ?, ?,?,?)";
-
-        PreparedStatement stmt = conn.prepareStatement(query);
-        stmt.setInt(1, id_client);
-        stmt.setInt(2, montant);
-        stmt.setString(3, moderecup);
-        stmt.setString(4, mode_livr);
-        stmt.setString(status, "Préparation");
-        stmt.setInt(6, frais_livraison);
-
-        stmt.executeUpdate();
-        c+=1;
-
-        System.out.println("Commande créée !");
-}
- */
-    // ️ Lecture et exécution du script SQL
-    private static void initialiserBase(String cheminFichier) {
-        try (Statement stmt = conn.createStatement()) {
-            String contenu = Files.readString(Path.of(cheminFichier));
-            String[] requetes = contenu.split(";");
-            for (String requete : requetes) {
-                requete = requete.trim();
-                if (!requete.isEmpty()) {
-                    stmt.execute(requete);
-                }
-            }
-            System.out.println("Tables créer succès !");
-        } catch (SQLException | IOException e) {
-            System.err.println("Erreur lors de l'exécution du script SQL : " + e.getMessage());
-        }
-    }
-
-    // Interface texte principale
-    private static void menuPrincipal(Connection conn,int id) {
-        Scanner scanner = new Scanner(System.in);
         int choix;
-
         do {
-            System.out.println("\n===== MENU PRINCIPAL =====");
-            System.out.println("1. Consulter le catalogue de produits");
+            System.out.println("\n==========================================");
+            System.out.println("       VALAISON - MENU PRINCIPAL");
+            System.out.println("==========================================");
+            System.out.println("1. Consulter le catalogue (Articles & Contenants)");
             System.out.println("2. Passer une commande");
-            System.out.println("3. Consulter les alertes de péremption");
-            System.out.println("4. Clôturer une commande");
+            System.out.println("3. Consulter les alertes de peremption");
+            System.out.println("4. Annuler une commande (Client)");
+            System.out.println("5. Espace STAFF (Gestion des statuts)");
             System.out.println("0. Quitter");
+            System.out.println("------------------------------------------");
             System.out.print("Votre choix : ");
-            choix = scanner.nextInt();
-            scanner.nextLine(); // consomme le retour à la ligne
+            
+            try {
+                String input = scanner.nextLine();
+                choix = Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                choix = -1;
+            }
 
-            switch (choix) {
-                case 1 -> consulterCatalogue(conn);
-                case 2 -> {
-                    ServiceCommande comm=new ServiceCommande();
-                    comm.passerCommandeDebut(id);
-                    }
-                case 3 -> consulterAlertes();
-                case 4 -> cloturerCommande(scanner);
-                case 0 -> System.out.println(" Au revoir !");
-                default -> System.out.println(" Choix invalide.");
+            try {
+                switch (choix) {
+                    case 1:
+                        consulterCatalogue(conn);
+                        break;
+                    case 2:
+                        // Appel au service de création de commande
+                        serviceCreation.passerCommandeDebut(idClient);
+                        break;
+                    case 3:
+                        consulterAlertes(conn);
+                        break;
+                    case 4:
+                        // Appel au service de gestion pour l'annulation
+                        menuAnnulation(conn, scanner, serviceGestion);
+                        break;
+                    case 5:
+                        // Sous-menu pour le personnel du magasin
+                        menuStaff(conn, scanner, serviceGestion);
+                        break;
+                    case 0:
+                        System.out.println("Au revoir !");
+                        break;
+                    default:
+                        System.out.println("[ERREUR] Choix invalide.");
+                }
+            } catch (SQLException e) {
+                System.out.println("[ERREUR SQL CRITIQUE] " + e.getMessage());
             }
         } while (choix != 0);
     }
 
-    // Consultation du catalogue
+    // --- SOUS-MENU : ANNULATION ---
+    private static void menuAnnulation(Connection conn, Scanner scanner, CloturerCommande gestion) throws SQLException {
+        System.out.println("\n--- ANNULATION DE COMMANDE ---");
+        System.out.print("Entrez l'ID de la commande a annuler : ");
+        try {
+            int idCmd = Integer.parseInt(scanner.nextLine());
+            gestion.annulerCommande(conn, idCmd);
+        } catch (NumberFormatException e) {
+            System.out.println("[ERREUR] ID invalide.");
+        }
+    }
+
+    // --- SOUS-MENU : STAFF ---
+    private static void menuStaff(Connection conn, Scanner scanner, CloturerCommande gestion) throws SQLException {
+        System.out.println("\n--- ESPACE STAFF (Gestion des Commandes) ---");
+        System.out.print("Entrez l'ID de la commande a traiter : ");
+        int idCmd;
+        try {
+            idCmd = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("[ERREUR] ID invalide.");
+            return;
+        }
+
+        System.out.println("Action a effectuer ?");
+        System.out.println("1. Preparer la commande (Passe a 'Prete' + Sortie Stock)");
+        System.out.println("2. Expedier la commande (Passe a 'En livraison')");
+        System.out.println("3. Confirmer la livraison (Passe a 'Livree')");
+        System.out.println("4. Confirmer le retrait boutique (Passe a 'Recuperee')");
+        System.out.println("0. Retour au menu principal");
+        System.out.print("Choix : ");
+
+        try {
+            int choixStaff = Integer.parseInt(scanner.nextLine());
+            switch (choixStaff) {
+                case 1:
+                    gestion.commandePrete(conn, idCmd);
+                    break;
+                case 2:
+                    gestion.commandeEnLivraison(conn, idCmd);
+                    break;
+                case 3:
+                    gestion.commandeLivree(conn, idCmd);
+                    break;
+                case 4:
+                    gestion.commandeRecuperee(conn, idCmd);
+                    break;
+                case 0:
+                    break; // Retour
+                default:
+                    System.out.println("[ERREUR] Choix invalide.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("[ERREUR] Entree invalide.");
+        }
+    }
+
+    // --- FONCTIONNALITE : CATALOGUE ---
     private static void consulterCatalogue(Connection conn) {
-        String sql = "SELECT a.idArticle, p.nom, p.categorie, a.modeConditionnement, a.prixVenteClient, " +
-                    // On utilise COALESCE pour afficher 0 au lieu de NULL si stock vide
-                    "COALESCE(SUM(l.quantiteDisponible), 0) AS quantiteTotale " + 
-                    "FROM Article a " +
-                    "JOIN Produit p ON a.idProduit = p.idProduit " +
-                    "LEFT JOIN Lot l ON a.idArticle = l.idArticle " +
-                    "GROUP BY a.idArticle, p.nom, p.categorie, a.modeConditionnement, a.prixVenteClient " +
-                    "ORDER BY p.nom";
+        // Requête complexe pour fusionner Articles et Contenants via la table Item
+        String sql = 
+            "SELECT i.idItem, i.typeItem, " +
+            "       p.nom AS nomArticle, a.modeConditionnement, a.prixVenteClient, a.delaiDisponibilite, " +
+            "       (SELECT SUM(quantiteDisponible) FROM Lot WHERE idArticle = a.idArticle) as stockArticle, " +
+            "       c.typeContenant, c.capacite, c.prixVente as prixContenant, c.stock as stockContenant " +
+            "FROM Item i " +
+            "LEFT JOIN Article a ON i.idArticle = a.idArticle " +
+            "LEFT JOIN Produit p ON a.idProduit = p.idProduit " +
+            "LEFT JOIN Contenant c ON i.idContenant = c.idContenant " +
+            "ORDER BY i.typeItem DESC, nomArticle, typeContenant";
 
-        try (Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql)) {
-            String separateur = "+-------+---------------------------+-----------------+-----------------+------------+------------------+";
-            System.out.println("\n--- 🛒 CATALOGUE DES PRODUITS ---");
-            System.out.println(separateur);
-            // En-tête du tableau pour faire joli
-            System.out.printf("| %-5s | %-25s | %-15s | %-15s | %-10s | %-16s |\n", 
-                      "ID", "Nom", "Catégorie", "Condit.", "Prix", "Disponibilité");
-            System.out.println(separateur);
-            while (rs.next()) {
-                System.out.printf("%-5d | %-25.25s | %-15.15s | %-15.15s | %10f |%-16s \n",
-                        rs.getInt("idArticle"),
-                        rs.getString("nom"),
-                        rs.getString("categorie"),
-                        rs.getString("modeConditionnement"),
-                        rs.getDouble("prixVenteClient"),
-                        rs.getDouble("quantiteTotale")
-                );
-            }
-           System.err.println(separateur);
-           System.err.println("");
-
-        } catch (SQLException e) {
-            System.err.println(" Erreur lors de la consultation du catalogue : " + e.getMessage());
-        }
-    }
-
-    private static int genererNouvelId(Connection conn, String table, String colonneId) throws SQLException {
-        String sql = "SELECT MAX(" + colonneId + ") FROM " + table;
-        try (Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
-            if (rs.next()) {
-                return rs.getInt(1) + 1;
-            }
-        }
-        return 1; // Si la table est vide, on commence à 1
-    }
-
-    private static double getPrixArticle(Connection conn, int idArticle) throws SQLException {
-        String sql = "SELECT prixVenteClient FROM Article WHERE idArticle = ?";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, idArticle);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) return rs.getDouble("prixVenteClient");
-        }
-        return 0.0;
-    }
-
-
-    // Alertes de péremption
-    private static void consulterAlertes() {
-        String sql = "SELECT nom, date_peremption FROM produits WHERE date_peremption < NOW() + INTERVAL 7 DAY";
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
-            System.out.println("\n--- Produits proches de la péremption ---");
+
+            String separateur = "+-------+-----------+------------------------------+------------------+----------+------------------------+";
+            System.out.println("\n--- CATALOGUE GENERAL (ITEMS) ---");
+            System.out.println(separateur);
+            // Formatage des colonnes
+            System.out.printf("| %-5s | %-9s | %-28s | %-16s | %-8s | %-22s |\n", 
+                              "ID", "Type", "Nom / Description", "Condit.", "Prix", "Disponibilite");
+            System.out.println(separateur);
+
             boolean vide = true;
             while (rs.next()) {
-                System.out.printf(" %s — périme le %s\n",
-                        rs.getString("nom"), rs.getDate("date_peremption"));
+                vide = false;
+                int idItem = rs.getInt("idItem");
+                String type = rs.getString("typeItem");
+                
+                String nom = "";
+                String cond = "-";
+                double prix = 0;
+                String dispo = "";
+
+                // Logique d'affichage selon si c'est un Article ou un Contenant
+                if ("ARTICLE".equals(type)) {
+                    nom = rs.getString("nomArticle");
+                    cond = rs.getString("modeConditionnement");
+                    prix = rs.getDouble("prixVenteClient");
+                    
+                    double stock = rs.getDouble("stockArticle");
+                    int delai = rs.getInt("delaiDisponibilite");
+                    
+                    if (stock > 0) dispo = "En stock: " + stock;
+                    else if (delai > 0) dispo = "Sous " + delai + " jours";
+                    else dispo = "Epuise";
+                } else {
+                    // C'est un CONTENANT
+                    nom = rs.getString("typeContenant") + " (" + rs.getDouble("capacite") + ")";
+                    cond = "Unite";
+                    prix = rs.getDouble("prixContenant");
+                    int stock = rs.getInt("stockContenant");
+                    dispo = (stock > 0) ? "En stock: " + stock : "Epuise";
+                }
+
+                // Affichage de la ligne
+                System.out.printf("| %-5d | %-9s | %-28.28s | %-16.16s | %8.2f | %-22.22s |\n",
+                        idItem, 
+                        type.length() > 9 ? type.substring(0, 9) : type, // Tronque si trop long
+                        nom, cond, prix, dispo);
+            }
+            System.out.println(separateur);
+            
+            if (vide) {
+                System.out.println("[INFO] Le catalogue est vide.");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("[ERREUR SQL] Impossible de lire le catalogue : " + e.getMessage());
+        }
+    }
+
+    // --- FONCTIONNALITE : ALERTES ---
+    private static void consulterAlertes(Connection conn) {
+        // Requête pour trouver les produits périmés dans moins de 7 jours
+        String sql = "SELECT p.nom, l.datePeremption, l.quantiteDisponible " +
+                     "FROM Lot l " +
+                     "JOIN Article a ON l.idArticle = a.idArticle " +
+                     "JOIN Produit p ON a.idProduit = p.idProduit " +
+                     "WHERE l.datePeremption < SYSDATE + 7 " +
+                     "AND l.quantiteDisponible > 0 " +
+                     "ORDER BY l.datePeremption ASC";
+
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            
+            System.out.println("\n--- ALERTES ANTI-GASPI (Peremption < 7 jours) ---");
+            boolean vide = true;
+            while (rs.next()) {
+                System.out.printf(" - %-20s : Reste %-5s unites (Perime le %s)\n",
+                        rs.getString("nom"), 
+                        rs.getString("quantiteDisponible"),
+                        rs.getDate("datePeremption"));
                 vide = false;
             }
-            if (vide) System.out.println("Aucune alerte pour le moment.");
+            if (vide) System.out.println("[OK] Aucune alerte de peremption.");
+            
         } catch (SQLException e) {
-            System.err.println("Erreur lors de la consultation des alertes : " + e.getMessage());
+            System.err.println("[ERREUR SQL] Impossible de lire les alertes : " + e.getMessage());
         }
     }
-
-    // Clôturer une commande
-    private static void cloturerCommande(Scanner scanner) {
-        System.out.print("Entrez l'ID de la commande à clôturer : ");
-        int id = scanner.nextInt();
-        String sql = "UPDATE commandes SET statut = 'TERMINEE' WHERE id = ?";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, id);
-            int n = pstmt.executeUpdate();
-            if (n > 0) System.out.println(" Commande clôturée avec succès !");
-            else System.out.println(" Commande introuvable.");
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la clôture : " + e.getMessage());
-        }
-    }
-
-
-    }
+}
