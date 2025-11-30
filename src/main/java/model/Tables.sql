@@ -77,6 +77,13 @@ CREATE TABLE Produit (
     CONSTRAINT Produit_FK FOREIGN KEY (idProducteur) REFERENCES Producteur(idProducteur)
 );
 
+CREATE TABLE CaracteristiqueProduit (
+    idProduit INTEGER NOT NULL,
+    caracteristique VARCHAR2(50) NOT NULL,
+    CONSTRAINT Caracteristique_PK PRIMARY KEY (idProduit, caracteristique),
+    CONSTRAINT Caracteristique_PK FOREIGN KEY (idProduit) REFERENCES Produit(idProduit)
+);
+
 CREATE TABLE Adresse (
     idAdresse INTEGER GENERATED ALWAYS AS IDENTITY,
     idClient INTEGER NOT NULL,
