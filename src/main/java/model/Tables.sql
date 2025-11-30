@@ -136,7 +136,11 @@ CREATE TABLE Adresse (
     idClient INTEGER NOT NULL,
     adressePostale VARCHAR2(200),
     pays VARCHAR2(50),
+    latitude NUMBER(10, 6),
+    longitude NUMBER(10, 6),
     CONSTRAINT Adresse_PK PRIMARY KEY (idAdresse)
+    CONSTRAINT Adresse_Client_FK FOREIGN KEY (idClient) REFERENCES Client(idClient)
+
 );
 
 CREATE TABLE Commande (
