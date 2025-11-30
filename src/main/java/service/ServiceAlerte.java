@@ -1,23 +1,21 @@
+package service;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
 
 public class ServiceAlerte {
 
     private Connection conn;
 
-    String cmd_sql = "SELECT idLot, idArticle, quantiteDisponible " +
-            "DATEDIFF(datePeremption,DATE(NOW())) AS nbJourRestant " +
+     String cmd_sql = "SELECT idLot, idArticle, quantiteDisponible, " +
+            "TRUNC(datePeremption - SYSDATE) AS nbJourRestant " +
             "FROM Lot " +
             "WHERE quantiteDisponible <> 0 " +
-            "AND datePeremption < NOW() + INTERVAL 7 DAY";
-
+            "AND datePeremption < SYSDATE + 7";
+            
     public ServiceAlerte(Connection conn){
         this.conn = conn;
     }
@@ -33,13 +31,14 @@ public class ServiceAlerte {
                 int idArticle = rs.getInt("idArticle");
                 float stock = rs.getFloat("quantiteDisponible");
                 int nbJourRestant = rs.getInt("nbJourRestant");
+                
                 if(nbJourRestant<=0){
-                    System.out.printf("PERTE péremption : Article = %d, Lot = %d, Quantité = %f\n",
+                    System.out.printf("PERTE péremption : Article = %d, Lot = %d, Quantité = %3.f\n",
                         idArticle,idLot,stock);
-                    perte_produit(idLot,idArticle,stock,"Péremption");   
+                    perte_produit(idLot,stock,"Péremption");   
                 }
                 else{
-                    System.out.printf("Article: %d, Quantité: %f — périme dans %d jours\n",
+                    System.out.printf("Article: %d, Quantité: %.3f : périme dans %d jours\n",
                         idArticle, stock, nbJourRestant);
                     reduction_peremption(idLot,nbJourRestant);
                 }
@@ -52,19 +51,24 @@ public class ServiceAlerte {
     }
 
 
-    public void perte_produit(int idLot,int idArticle,float quantitePerdue,String nature){
-        String sql = "UPDATE Lot SET quantiteDisponible = quantiteDisponible - ? WHERE idLot = ?;" +
-            "UPDATE Article SET stock = stock - ? WHERE idArticle = ?;" +
-            "INSERT INTO Perte (idLot,idContenant,datePerte,naturePerte,quantitePerdue) Values(?,NULL,NOW(),?,?);";
-        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
-            pstmt.setFloat(1,quantitePerdue);
-            pstmt.setInt(2,idLot);
-            pstmt.setFloat(3,quantitePerdue);
-            pstmt.setInt(4,idArticle);
-            pstmt.setInt(5,idLot);
-            pstmt.setString(6,nature);
-            pstmt.setFloat(7,quantitePerdue);
-            pstmt.executeUpdate();
+    public void perte_produit(int idLot,float quantitePerdue,String nature){
+        String updateSql = "UPDATE Lot SET quantiteDisponible = quantiteDisponible - ? WHERE idLot = ?";
+        String insertSql = "INSERT INTO Perte (idLot, idContenant, datePerte, naturePerte, quantitePerdue) VALUES (?, NULL, SYSDATE, ?, ?)";
+        
+        try{
+            try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                updateStmt.setFloat(1, quantitePerdue);
+                updateStmt.setInt(2, idLot);
+                updateStmt.executeUpdate();
+            }
+            
+            // Exécuter l'INSERT
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                insertStmt.setInt(1, idLot);
+                insertStmt.setString(2, nature);
+                insertStmt.setFloat(3, quantitePerdue);
+                insertStmt.executeUpdate();
+            }
             conn.commit();
             System.out.println(" Ajout en Perte du produit !");
         } catch (SQLException e){
@@ -73,15 +77,22 @@ public class ServiceAlerte {
     }
 
     public void perte_contenant(int idContenant,float quantitePerdue,String nature){
-        String sql = "UPDATE Contenant SET stock = stock - ? WHERE idContenant = ?;" +
-          "INSERT INTO Perte (idLot,idContenant,datePerte,naturePerte,quantitePerdue) Values(NULL,?,NOW(),?,?);";
-        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
-            pstmt.setFloat(1,quantitePerdue);
-            pstmt.setInt(2,idContenant);
-            pstmt.setInt(3,idContenant);
-            pstmt.setString(4,nature);
-            pstmt.setFloat(5,quantitePerdue);
-            pstmt.executeUpdate();
+        String updateSql = "UPDATE Contenant SET stock = stock - ? WHERE idContenant = ?";
+        String insertSql = "INSERT INTO Perte (idLot, idContenant, datePerte, naturePerte, quantitePerdue) VALUES (NULL, ?, SYSDATE, ?, ?)";
+        
+        try{
+            try (PreparedStatement updateStmt = conn.prepareStatement(updateSql)) {
+                updateStmt.setFloat(1, quantitePerdue);
+                updateStmt.setInt(2, idContenant);
+                updateStmt.executeUpdate();
+            }
+            
+            try (PreparedStatement insertStmt = conn.prepareStatement(insertSql)) {
+                insertStmt.setInt(1, idContenant);
+                insertStmt.setString(2, nature);
+                insertStmt.setFloat(3, quantitePerdue);
+                insertStmt.executeUpdate();
+            }
             conn.commit();
             System.out.println(" Ajout en Perte de contenants !");
         } catch (SQLException e){
@@ -90,7 +101,7 @@ public class ServiceAlerte {
     }
 
     private void reduction_peremption(int idLot,int nbJourRestant){
-        String sql = "UPDATE Lot SET reduction = ? WHERE idLot = ?";
+        String sql = "UPDATE Lot SET pourcentageReduction = ? WHERE idLot = ?";
         try(PreparedStatement pstmt = conn.prepareStatement(sql)){
             if(nbJourRestant>3){
                 pstmt.setInt(1, 30);
