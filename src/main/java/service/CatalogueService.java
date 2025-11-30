@@ -43,7 +43,7 @@ public class CatalogueService {
         }
 
         System.out.println("\n-- Contenants --");
-        String sql2 = "SELECT Item.idItem, Contenant.typeContenant, Contenant.capacite, Contenant.reutilisable, Contenant.stock, Contenant.prixVente " +
+        String sql2 = "SELECT Item.idItem, Contenant.typeContenant, Contenant.capacite, Contenant.unite, Contenant.reutilisable, Contenant.stock, Contenant.prixVente " +
             "FROM Item, Contenant WHERE Item.idContenant = Contenant.idContenant";
         try (Statement stmt2 = conn.createStatement();
              ResultSet rs2 = stmt2.executeQuery(sql)){
@@ -56,10 +56,11 @@ public class CatalogueService {
                 else{
                     est_reutilisable = "Non Reutilisable";
                 }
-                System.out.printf("Id: %d, Type: %s, Capacite: %f, %s --> Prix: %f, Stock: %f\n",
+                System.out.printf("Id: %d, Type: %s, Capacite: %f %s, %s --> Prix: %f, Stock: %f\n",
                     rs2.getInt("Item.idItem"),
                     rs2.getString("Contenant.typeContenant"),
                     rs2.getFloat("Contenant.capacite"),
+                    rs2.getString("Contenant.unite"),
                     est_reutilisable,
                     rs2.getFloat("Contenant.prixVente"),
                     rs2.getFloat("Contenant.stock"));
