@@ -21,53 +21,75 @@ public class ServiceCommande {
     );
 
     // --- LA TRANSACTION PRINCIPALE ---
-    public void passerCommandeDebut(int idClient) {
+    public void passerCommandeDebut(Connection conn,int idClient) {
         Scanner scanner = new Scanner(System.in);
-        int choix;
-        Map<Integer, Integer> panier = new HashMap<>(); // Associe IdItem à qte demandée
+        Map<Integer, Integer> panier = new HashMap<>();
 
-        System.out.println("--- DÉBUT DE COMMANDE ---");
+        System.out.println("--- DEBUT DE COMMANDE ---");
         System.out.println("Veuillez saisir les Identifiants (ID ITEM) du catalogue.");
+        
+        int choix = 0;
         do {
             System.out.print("Entrez l'ID de l'ITEM (ou -1 pour terminer) : ");
-            choix = scanner.nextInt();
-            if (choix == -1) continue;
-            
-            System.out.print("Saisissez la quantité : ");
-            int quantite = scanner.nextInt();
-            
-            panier.put(choix, panier.getOrDefault(choix, 0) + quantite);
-            System.out.println("-> Item ajouté au panier.");
+            if (scanner.hasNextInt()) {
+                choix = scanner.nextInt();
+                if (choix != -1) {
+                    System.out.print("Saisissez la quantite : ");
+                    int quantite = scanner.nextInt();
+                    panier.put(choix, panier.getOrDefault(choix, 0) + quantite);
+                    System.out.println("-> Item ajoute.");
+                }
+            } else {
+                System.out.println("Veuillez entrer un nombre.");
+                scanner.next(); // Vider le buffer erreur
+            }
         } while (choix != -1);
 
         if (panier.isEmpty()) {
-            System.out.println("Panier vide, commande annulée.");
+            System.out.println("Panier vide, commande annulee.");
             return;
         }
 
+        // Nettoyage du buffer
         scanner.nextLine(); 
-        
-        System.out.println("\n--- OPTIONS DE Recupération ---");
-        System.out.println(" - Tapez 'Livraison' pour domicile");
-        System.out.println(" - Tapez 'Boutique' pour retrait");
-        System.out.print("Votre choix : ");
-        String modeLivraison = scanner.nextLine();
 
-        System.out.println("\n--- MODE DE PAIEMENT ---");
-        System.out.println(" - Tapez 'En ligne'");
-        System.out.println(" - Tapez 'En boutique'");
-        System.out.print("Votre choix : ");
-        String modePaiement = scanner.nextLine();
+        String modeLivraison = "";
+        while (true) {
+            System.out.println("\n--- MODE DE RECUPERATION ---");
+            System.out.println(" - Tapez 'Livraison' (Domicile)");
+            System.out.println(" - Tapez 'Boutique' (Retrait)");
+            System.out.print("Votre choix : ");
+            String input = scanner.nextLine().trim(); // trim() enlève les espaces accidentels
 
-        passerCommande(idClient, panier,modeLivraison,modePaiement);
+            if (input.equalsIgnoreCase("Livraison") || input.equalsIgnoreCase("Boutique")) {
+                // On normalise la casse pour la BDD (Première lettre majuscule)
+                modeLivraison = input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
+                break;
+            }
+            System.out.println("Choix invalide. Vous devez taper 'Livraison' ou 'Boutique'.");
+        }
+
+        String modePaiement = "";
+        while (true) {
+            System.out.println("\n--- MODE DE PAIEMENT ---");
+            System.out.println(" - Tapez 'Carte'");
+            System.out.println(" - Tapez 'Especes'");
+            System.out.print("Votre choix : ");
+            String input = scanner.nextLine().trim();
+
+            if (input.equalsIgnoreCase("Carte") || input.equalsIgnoreCase("Especes")) {
+                modePaiement = input.substring(0, 1).toUpperCase() + input.substring(1).toLowerCase();
+                break;
+            }
+            System.out.println(" Choix invalide. Tapez 'Carte' ou 'Especes'.");
+        }
+
+        // Lancement de la transaction
+        passerCommande(conn,idClient, panier, modeLivraison, modePaiement);
     }
 
-    public void passerCommande(int idClient, Map<Integer, Integer> panier,String modeLivraison,String modePaiement) {
-        Connection conn = null;
+    public void passerCommande(Connection conn, int idClient, Map<Integer, Integer> panier,String modeLivraison,String modePaiement) {
         try {
-            // Connection Oracle
-            String url = "jdbc:oracle:thin:@localhost:1521:XE"; 
-            conn = DriverManager.getConnection(url, "system", "lahmouza");
             conn.setAutoCommit(false); 
             System.out.println("⏳ Traitement de la commande en cours...");
 
@@ -99,21 +121,19 @@ public class ServiceCommande {
 
             creer_commande(conn, idClient, modeLivraison, modePaiement, total, fraisLivraisonFinal, panier);
             conn.commit();
-            System.out.printf("✅ Transaction validée ! Montant total : %.2f € (dont %.2f € de livraison)\n", total, fraisLivraisonFinal);
+            System.out.printf(" Transaction validée ! Montant total : %.2f € (dont %.2f € de livraison)\n", total, fraisLivraisonFinal);
 
         } catch (Exception e) {
             try { 
                 if (conn != null) conn.rollback(); 
-                System.err.println("❌ Commande annulée : " + e.getMessage());
+                System.err.println(" Commande annulée : " + e.getMessage());
             } catch (SQLException ex) { ex.printStackTrace(); }
-        } finally {
-            try { if (conn != null) conn.close(); } catch (SQLException e) {}
         }
     }
 
     // --- MÉTHODES INTERNES ---
 
-    public static boolean est_disponible_item(Connection conn, int idItem, int quantite) throws SQLException {
+    public boolean est_disponible_item(Connection conn, int idItem, int quantite) throws SQLException {
         // type d'item
         String sqlIdentify = "SELECT typeItem, idArticle, idContenant FROM Item WHERE idItem = ?";
         String type = null;
@@ -140,14 +160,14 @@ public class ServiceCommande {
     }
 
     // Vérif spécifique Article (Lot + Saison + Sur commande)
-    private static boolean est_disponible_article(Connection conn, int idArticle, int quantite) throws SQLException {
+    public  boolean est_disponible_article(Connection conn, int idArticle, int quantite) throws SQLException {
         // Hors Saison
         String querySaison = "SELECT 1 FROM est_de_saison e JOIN Article a ON e.idProduit = a.idProduit " +
                              "WHERE a.idArticle = ? AND SYSDATE NOT BETWEEN e.dateDebut AND e.dateFin";
         try (PreparedStatement s = conn.prepareStatement(querySaison)) {
             s.setInt(1, idArticle);
             if (s.executeQuery().next()) {
-                System.out.println("⛔ Article " + idArticle + " hors saison.");
+                System.out.println(" Article " + idArticle + " hors saison.");
                 return false;
             }
         }
@@ -165,18 +185,22 @@ public class ServiceCommande {
         try (PreparedStatement s = conn.prepareStatement(queryCommande)) {
             s.setInt(1, idArticle);
             ResultSet rs = s.executeQuery();
-            if (rs.next() && rs.getInt(1) > 0) {
-                System.out.println("ℹ️ Article " + idArticle + " dispo sur commande.");
-                return true;
+
+            if (rs.next()) {
+                int delai = rs.getInt(1);
+                if (delai > 0) {
+                    System.out.println("[INFO] Stock vide, mais Article " + idArticle + " disponible sur commande (Delai : " + delai + " jours).");
+                    return true; // On autorise la commande
+                }
             }
-        }
+            }
         
-        System.out.println("⚠️ Stock insuffisant Article " + idArticle);
+        System.out.println(" Stock insuffisant Article " + idArticle);
         return false;
     }
 
     // Vérif spécifique Contenant
-    private static boolean est_disponible_contenant(Connection conn, int idContenant, int quantite) throws SQLException {
+    public boolean est_disponible_contenant(Connection conn, int idContenant, int quantite) throws SQLException {
         String sql = "SELECT stock FROM Contenant WHERE idContenant = ?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idContenant);
@@ -190,7 +214,7 @@ public class ServiceCommande {
         return false;
     }
 
-    private static void creer_commande(Connection conn, int idClient, String modeLivraison, String modePaiement, double total, double frais, Map<Integer, Integer> panier) throws SQLException {
+    public void creer_commande(Connection conn, int idClient, String modeLivraison, String modePaiement, double total, double frais, Map<Integer, Integer> panier) throws SQLException {
         // 1. Insertion Commande
         String query = "INSERT INTO Commande (idClient, dateCommande, statut, modeRecuperation, modePaiement, montantTotal, fraisLivraison) "
                      + "VALUES (?, SYSDATE, 'En préparation', ?, ?, ?, ?)";
@@ -226,9 +250,10 @@ public class ServiceCommande {
                 
             }
         }
+
     }
 
-    // --- Outils Polymorphes ---
+    // --- Outils ---
 
     private static double getPrixItem(Connection conn, int idItem) throws SQLException {
         // Récupère le prix (Soit Article avec promo, soit Contenant)

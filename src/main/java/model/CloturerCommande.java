@@ -46,9 +46,10 @@ public class CloturerCommande {
                     for (Map.Entry<Integer, Integer> ligne : articlesADecrementer.entrySet()) {
                         int idItem = ligne.getKey();
                         int qte = ligne.getValue();
+                        ServiceCommande serviceCommande=new ServiceCommande();
                         
                         // On vérifie une dernière fois si c'est disponible
-                        if (!ServiceCommande.est_disponible_item(conn, idItem, qte)) {
+                        if (!serviceCommande.est_disponible_item(conn, idItem, qte)) {
                             System.out.println(" Stock insuffisant pour l'item " + idItem + " !");
                             System.out.println("   La commande ne peut pas être préparée (Rupture de stock).");
                             conn.rollback();
@@ -276,54 +277,68 @@ public class CloturerCommande {
 
     // Gérer le stock 
 
-    
     private void decrementerStockItem(Connection conn, int idItem, int qte) throws SQLException {
-        String sql = "SELECT idLot, quantiteDisponible FROM Lot " + 
-                     "WHERE idArticle = ? AND quantiteDisponible > 0 " + 
-                     "ORDER BY datePeremption ASC " + 
-                     "FOR UPDATE";
-        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+        String sqlIdentify = "SELECT typeItem, idArticle, idContenant FROM Item WHERE idItem = ?";
+        
+        try (PreparedStatement stmt = conn.prepareStatement(sqlIdentify)) {
             stmt.setInt(1, idItem);
             ResultSet rs = stmt.executeQuery();
+            
             if (rs.next()) {
-                // Article 
-                if ("ARTICLE".equals(rs.getString("typeItem"))) {
-                    decrementerStockArticle(conn, rs.getInt("idArticle"), qte);
-                } else {
-                    // Contenant
+                String type = rs.getString("typeItem");
+                
+                if ("ARTICLE".equals(type)) {
+                    // C'est un article
+                    int idArticle = rs.getInt("idArticle");
+                    decrementerStockArticle(conn, idArticle, qte);
+                } 
+                else {
+                    // C'est un contenant
+                    int idContenant = rs.getInt("idContenant");
                     String up = "UPDATE Contenant SET stock = stock - ? WHERE idContenant = ?";
                     try(PreparedStatement s = conn.prepareStatement(up)) {
                         s.setInt(1, qte);
-                        s.setInt(2, rs.getInt("idContenant"));
+                        s.setInt(2, idContenant);
                         s.executeUpdate();
                     }
                 }
+            } else {
+                throw new SQLException("Item " + idItem + " introuvable dans la base.");
             }
         }
     }
 
     private void decrementerStockArticle(Connection conn, int idArticle, int qte) throws SQLException {
-        String sql = "SELECT idLot, quantiteDisponible FROM Lot WHERE idArticle=? AND quantiteDisponible>0 ORDER BY datePeremption ASC";
-        try (PreparedStatement s = conn.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+        String sql = "SELECT idLot, quantiteDisponible FROM Lot " + 
+                     "WHERE idArticle = ? AND quantiteDisponible > 0 " + 
+                     "ORDER BY datePeremption ASC " + 
+                     "FOR UPDATE";
+
+        try (PreparedStatement s = conn.prepareStatement(sql)) {
             s.setInt(1, idArticle);
-            ResultSet rs = s.executeQuery();
-            double reste = qte;
-            while (rs.next() && reste > 0) {
-                int idLot = rs.getInt(1);
-                double dispo = rs.getDouble(2);
-                double pris = Math.min(dispo, reste);
+            
+            try (ResultSet rs = s.executeQuery()) {
+                double reste = qte;
                 
-                try(PreparedStatement up = conn.prepareStatement("UPDATE Lot SET quantiteDisponible = quantiteDisponible - ? WHERE idLot=?")) {
-                    up.setDouble(1, pris);
-                    up.setInt(2, idLot);
-                    up.executeUpdate();
+                while (rs.next() && reste > 0) {
+                    int idLot = rs.getInt("idLot");
+                    double dispo = rs.getDouble("quantiteDisponible");
+                    double pris = Math.min(dispo, reste);
+                    
+                    String up = "UPDATE Lot SET quantiteDisponible = quantiteDisponible - ? WHERE idLot = ?";
+                    try(PreparedStatement p = conn.prepareStatement(up)) {
+                        p.setDouble(1, pris);
+                        p.setInt(2, idLot);
+                        p.executeUpdate();
+                    }
+                    reste -= pris;
                 }
-                reste -= pris;
+                
+                if (reste > 0) {
+                    throw new SQLException("Rupture de stock : Il manque " + reste + " unites pour l'article " + idArticle);
+                }
             }
         }
     }
-
-
-
 }
 

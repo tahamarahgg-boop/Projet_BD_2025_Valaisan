@@ -76,7 +76,7 @@ public class ValaisonJDBC {
                         break;
                     case 2:
                         // Appel au service de création de commande
-                        serviceCreation.passerCommandeDebut(idClient);
+                        serviceCreation.passerCommandeDebut(conn,idClient);
                         break;
                     case 3:
                         consulterAlertes(conn);
