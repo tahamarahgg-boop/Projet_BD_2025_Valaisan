@@ -1,48 +1,44 @@
 /* ==========================================================================
    PROJET BD VALAISON - SQUELETTE DES TRANSACTIONS & REQUÊTES CLÉS
-   ==========================================================================
-   Ce fichier documente la logique transactionnelle implantée dans le code Java.
-   Il montre l'usage des verrous (FOR UPDATE), l'atomicité (COMMIT/ROLLBACK)
-   et les requêtes complexes.
    ========================================================================== */
 
 
 /* ==========================================================================
    1. FONCTIONNALITÉ : PASSAGE DE COMMANDE (CLIENT)
-   SOURCE : ServiceCommande.java
-   PRINCIPE : Insertion atomique de l'entête et des lignes. Le prix est figé.
-   ISOLATION : READ COMMITTED (Ne bloque pas les autres lecteurs)
+   OBJECTIF : Enregistrer une volonté d'achat et figer le prix.
+   ISOLATION : READ COMMITTED (Pour ne pas bloquer les lectures de catalogue).
+   CONTRAINTE : Le panier ne doit pas être vide (Vérifié en amont)
    ========================================================================== */
 
--- Début de la transaction
--- (En Java : conn.setAutoCommit(false))
+-- 1. Début de Transaction
+BEGIN;
 
-    -- 1. Création de l'entête de la commande
-    -- Le statut initial est toujours 'En préparation'.
+    -- 2. Création de l'entête de commande
+    -- Initialisation statut 'En préparation'. La date est celle du système (SYSDATE).
     INSERT INTO Commande (idClient, dateCommande, statut, modeRecuperation, modePaiement, montantTotal, fraisLivraison) 
     VALUES (:idClient, SYSDATE, 'En préparation', :modeLivraison, :modePaiement, :totalCalcule, :fraisLivraison);
 
-    -- (Récupération de l'ID généré : idCmd)
+    -- [JAVA] : Récupération de la clé générée (idCommande) pour l'étape suivante.
 
-    -- 2. Insertion des lignes (Boucle sur le panier)
-    -- IMPORTANT : On insère le prix tel qu'il a été calculé par l'application à l'instant T.
-    -- Cela protège la commande contre une hausse de prix future.
+    -- 3. Insertion des lignes (Itération sur le panier)
+    -- PRINCIPE : Snapshot du prix. On insère le prix calculé à l'instant T (:prixSnapshot)
+    -- pour gérer le changement de prix après la commande .
     INSERT INTO LigneCommande (idCommande, idItem, quantite, prixUnitaireApplique) 
-    VALUES (:idCmd, :idItem1, :qte1, :prixSnapshot1);
+    VALUES (:idCmd, :idItem_1, :qte_1, :prixSnapshot_1);
 
     INSERT INTO LigneCommande (idCommande, idItem, quantite, prixUnitaireApplique) 
-    VALUES (:idCmd, :idItem2, :qte2, :prixSnapshot2);
+    VALUES (:idCmd, :idItem_2, :qte_2, :prixSnapshot_2);
+    -- ... (Répété pour N articles)
 
--- Validation : La commande existe
+    -- 4. Validation (Commit)
+    -- Si une erreur technique survient ici, tout est annulé (ROLLBACK implicite).
 COMMIT;
-
 
 /* ==========================================================================
    2. FONCTIONNALITÉ : PRÉPARATION & SORTIE DE STOCK (STAFF)
-   SOURCE : CloturerCommande.java
-   PRINCIPE : Transaction critique. Utilise le verrouillage pessimiste pour
-              éviter les "Race Conditions" (deux staff prenant le même produit).
-   GESTION STOCK : FIFO (Premier entré, premier sorti) pour les lots périssables.
+   OBJECTIF : Valider  la commande et décrémenter le stock.
+   ISOLATION : SERIALIZABLE (Simulé via verrous pessimistes FOR UPDATE).
+   CONTRAINTE : Stock Disponible >= Quantité Demandée.
    ========================================================================== */
 
 -- Début de la transaction
@@ -55,14 +51,16 @@ COMMIT;
 
     -- 2. Boucle sur les articles de la commande : Débit du stock
     
-        -- CAS A : C'est un ARTICLE (Gestion par Lot / FIFO)
-        -- On cherche et VERROUILLE les lots disponibles, du plus vieux au plus récent (FIFO).
+        -- CAS A : C'est un ARTICLE 
+        -- 3a. Identification et Verrouillage des Lots
+        -- On sélectionne les lots disponibles, triés par date de péremption.
+        -- FOR UPDATE verrouille ces lignes pour empêcher la "survente" à un autre client.
         SELECT idLot, quantiteDisponible 
         FROM Lot 
         WHERE idArticle = :idArt 
           AND quantiteDisponible > 0 
         ORDER BY datePeremption ASC 
-        FOR UPDATE; -- <--- VERROU CRITIQUE
+        FOR UPDATE;
 
         -- Pour chaque lot trouvé, on prélève la quantité nécessaire
         UPDATE Lot 
@@ -88,9 +86,8 @@ COMMIT;
 
 /* ==========================================================================
    3. FONCTIONNALITÉ : ANNULATION PAR LE PROPRIÉTAIRE (STAFF)
-   SOURCE : CloturerCommande.java
-   PRINCIPE : Gère le cas particulier où une commande déjà "Prête" est annulée.
-              Le stock doit être recrédité (Inverse de la transaction 2).
+   OBJECTIF : Annuler une commande 'Prête' et restituer le stock.
+   CONTRAINTE : Ne peut pas annuler si 'En livraison' ou 'Livrée'.
    ========================================================================== */
 
 -- Début de la transaction
@@ -118,38 +115,26 @@ COMMIT;
 
 /* ==========================================================================
    4. FONCTIONNALITÉ : GESTION DES ALERTES PÉREMPTION (SYSTÈME)
-   SOURCE : ServiceAlerte.java
-   PRINCIPE : Maintenance de la base. Identification des lots périmés ou à risque.
+   OBJECTIF : Sortir les produits périmés et solder les produits à date courte.
    ========================================================================== */
 
--- A. Identification (Lecture)
-SELECT idLot, idArticle, quantiteDisponible, 
-       TRUNC(datePeremption - SYSDATE) AS nbJourRestant 
-FROM Lot 
-WHERE quantiteDisponible <> 0 
-  AND datePeremption < SYSDATE + 7
-FOR UPDATE; -- <-- Verrou pour qu'une commande ne prenne pas ce lot tant qu'il n'a pas été update
-
-
--- B. Traitement : Produit PÉRIMÉ (Date dépassée)
--- Début Transaction
-    -- 1. Le stock est mis à zéro (Perte sèche)
+-- SCÉNARIO A : PRODUIT PÉRIMÉ (Date > Date Limite)
+BEGIN;
+    -- 1. Mise à zéro du stock physique (Ne peut plus être vendu)
     UPDATE Lot SET quantiteDisponible = 0 WHERE idLot = :idLot;
     
-    -- 2. Archivage dans la table Perte pour comptabilité
-    INSERT INTO Perte (idLot, idContenant, datePerte, naturePerte, quantitePerdue) 
-    VALUES (:idLot, NULL, SYSDATE, 'Péremption', :qtePerdue);
+    -- 2. Enregistrement comptable de la perte (Traçabilité)
+    INSERT INTO Perte (idLot, datePerte, naturePerte, quantitePerdue) 
+    VALUES (:idLot, SYSDATE, 'Péremption DLC', :qteStockAvant);
 COMMIT;
 
-
--- C. Traitement : Produit EN ALERTE (J-7 à J-0)
--- Début Transaction
-    -- Application d'une réduction pour écouler le stock rapidement
+-- SCÉNARIO B : PRODUIT EN ALERTE (J-7)
+BEGIN;
+    -- Application d'une réduction automatique sur le lot spécifique
     UPDATE Lot 
-    SET pourcentageReduction = :nouvelleReduction 
+    SET pourcentageReduction = :tauxReduction -- (ex: 30%)
     WHERE idLot = :idLot;
 COMMIT;
-
 
 /* ==========================================================================
    5. FONCTIONNALITÉ : CONSULTATION CATALOGUE
