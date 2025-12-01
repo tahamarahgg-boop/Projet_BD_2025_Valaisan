@@ -14,7 +14,7 @@ public class ServiceAlerte {
             "TRUNC(datePeremption - SYSDATE) AS nbJourRestant " +
             "FROM Lot " +
             "WHERE quantiteDisponible <> 0 " +
-            "AND datePeremption < SYSDATE + 7";
+            "AND datePeremption < SYSDATE + 7 FOR UPDATE";
             
     public ServiceAlerte(Connection conn){
         this.conn = conn;
