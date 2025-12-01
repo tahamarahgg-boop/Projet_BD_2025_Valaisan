@@ -259,7 +259,7 @@ public class CloturerCommande {
                         conn.rollback(); return;
                     }
                     // Vérification séquence (ex: on ne passe pas de 'Prête' à 'Livrée' sans passer par 'En livraison')
-                    // (Sauf si vous voulez être permissif, ici c'est strict)
+
                     if(!oldSt.isEmpty() && !rs.getString("statut").equalsIgnoreCase(oldSt)) {
                         System.out.println(" Erreur : Statut actuel incorrect (" + rs.getString("statut") + ").");
                         conn.rollback(); return;
@@ -270,13 +270,34 @@ public class CloturerCommande {
                         conn.commit();
                         System.out.println(" Statut mis à jour : " + newSt);
                     }
+                    // Si le nouveau statut est final (Livrée ou Récupérée), on met à jour la date
+                    String sqlUpdate;
+                    if ("Livrée".equalsIgnoreCase(newSt) || "Récupérée".equalsIgnoreCase(newSt)) {
+                        sqlUpdate = "UPDATE Commande SET statut=?, dateReception=SYSDATE WHERE idCommande=?";
+                    } else {
+                        sqlUpdate = "UPDATE Commande SET statut=? WHERE idCommande=?";
+                    }
+
+                    try(PreparedStatement up = conn.prepareStatement(sqlUpdate)) {
+                        up.setString(1, newSt); 
+                        up.setInt(2, id); 
+                        up.executeUpdate(); 
+                        
+                        conn.commit();
+                        System.out.println(" Statut mis à jour : " + newSt);
+                        if ("Livrée".equalsIgnoreCase(newSt) || "Récupérée".equalsIgnoreCase(newSt)) {
+                            System.out.println("   -> Date de réception enregistrée à l'instant.");
+                        }
+                    }
                 } else { 
                     conn.rollback(); System.out.println("Commande introuvable"); 
                 }
             }
-        } catch(SQLException e) { conn.rollback(); throw e; }
+        } 
+        catch(SQLException e) { conn.rollback(); throw e; }
     }
 
+ 
     // --- UTILITAIRE PRIX  ---
     
     public double getPrixItem(Connection conn, int idItem) throws SQLException {
