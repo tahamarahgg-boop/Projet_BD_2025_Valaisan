@@ -138,9 +138,9 @@ INSERT INTO est_de_saison (idProduit, dateDebut, dateFin) VALUES (7, TO_DATE('01
 -- Lot 1 : Normal
 INSERT INTO Lot (idArticle, dateReception, quantiteInitiale, quantiteDisponible, datePeremption, typePeremption) 
 VALUES (1, SYSDATE-5, 100, 80, SYSDATE+20, 'DLUO');
--- Lot 2 : Promo Date Courte (Périme dans 3 jours)
+-- Lot 2 : Promo Date Courte (Périme dans 4 jours)
 INSERT INTO Lot (idArticle, dateReception, quantiteInitiale, quantiteDisponible, datePeremption, typePeremption, pourcentageReduction) 
-VALUES (1, SYSDATE-15, 50, 10, SYSDATE+3, 'DLC', 30); 
+VALUES (1, SYSDATE-15, 50, 10, SYSDATE+4, 'DLC', 30); 
 
 -- Pommes Sachet 3kg (Article 2 / Item 5)
 INSERT INTO Lot (idArticle, dateReception, quantiteInitiale, quantiteDisponible, datePeremption, typePeremption) 
@@ -162,7 +162,7 @@ VALUES (5, SYSDATE-30, 24, 0, SYSDATE+180, 'DLUO');
 
 -- Farine (Article 7 / Item 10)
 INSERT INTO Lot (idArticle, dateReception, quantiteInitiale, quantiteDisponible, datePeremption, typePeremption) 
-VALUES (7, SYSDATE-20, 50, 48, SYSDATE+100, 'DLUO');
+VALUES (7, SYSDATE-20, 50, 48, SYSDATE, 'DLUO');
 
 
 COMMIT;
