@@ -83,7 +83,6 @@ public class ServiceCommande {
         CloturerCommande staffOutils = new CloturerCommande();
         
         try {
-            conn.setAutoCommit(false);
             // Isolation standard : le client ne bloque pas les autres
             conn.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
             

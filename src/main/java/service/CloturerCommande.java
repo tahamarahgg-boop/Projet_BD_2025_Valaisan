@@ -10,7 +10,6 @@ import java.util.Map;
 public class CloturerCommande {
 
     public void commandePrete(Connection conn, int idCmd,int idStaff) throws SQLException {
-        conn.setAutoCommit(false);
         try {
             // 1. Verrouiller la commande et vérifier le statut
             String sqlLock = "SELECT statut FROM Commande WHERE idCommande = ? FOR UPDATE";
