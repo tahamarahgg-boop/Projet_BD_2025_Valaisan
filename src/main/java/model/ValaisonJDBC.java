@@ -20,6 +20,7 @@ public class ValaisonJDBC {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            conn.setAutoCommit(false);
             System.out.println("[OK] Connecte a la base de donnees.");
 
             Scanner scanner = new Scanner(System.in);
@@ -159,9 +160,9 @@ public class ValaisonJDBC {
                 case 3: staff.commandeLivree(conn, idCmd); break;
                 case 4: staff.commandeRecuperee(conn, idCmd); break;
                 
-                // Option Annulation Propriétaire
+                // Annulation par Staff
                 case 5: 
-                    System.out.println("Annulation forcée par le propriétaire...");
+                    System.out.println("Annulation forcée par le Staff...");
                     // true = C'est le staff, donc droit d'annuler même si "Prête"
                     staff.annulerCommande(conn, idCmd, true); 
                     break;

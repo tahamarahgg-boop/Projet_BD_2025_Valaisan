@@ -7,13 +7,7 @@ import java.sql.Statement;
 
 public class ServiceCatalogue {
 
-     String cmd_sql = "SELECT idLot, idArticle, quantiteDisponible, " +
-            "TRUNC(datePeremption - SYSDATE) AS nbJourRestant " +
-            "FROM Lot " +
-            "WHERE quantiteDisponible <> 0 " +
-            "AND datePeremption < SYSDATE + 7";
     
-
         // --- AFFICHAGE (Catalogue/Alertes) ---
     public static void consulterCatalogue(Connection conn) {
         // Requête simplifiée pour le débogage
