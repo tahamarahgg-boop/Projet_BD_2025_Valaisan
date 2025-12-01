@@ -2,6 +2,8 @@ package model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -55,6 +57,7 @@ public class ValaisonJDBC {
             System.out.println("3. Consulter les alertes");
             System.out.println("4. Annuler une commande (Client)");
             System.out.println("5. Espace STAFF (Gestion des statuts)");
+            System.out.println("6. Droit à l'oubli (Supprimer mon compte)");
             System.out.println("0. Quitter");
             System.out.println("------------------------------------------");
             System.out.print("Votre choix : ");
@@ -84,14 +87,17 @@ public class ValaisonJDBC {
                         break;
                     case 4:
                         // Utilise CloturerCommande
-                        
                         menuAnnulation(conn, scanner, serviceStaff);
                         break;
                     case 5:
                         // Utilise CloturerCommande
-                        
                         menuStaff(conn, scanner, serviceStaff);
                         break;
+                    case 6:
+                        // Droit à l'oubli
+                        ServiceClient serviceClientRGPD = new ServiceClient();
+                        serviceClientRGPD.exercerDroitOubli(conn, idClient);
+
                     case 0:
                         System.out.println("Au revoir !");
                         break;
@@ -174,5 +180,72 @@ public class ValaisonJDBC {
             System.out.println("Choix invalide.");
         }
     }
+
+
+    // -------------------------- 6. ServiceClient (GDPR) --------------------------
+    static class ServiceClient {
+        
+        public void exercerDroitOubli(Connection conn, int idClient) {
+            try {
+                conn.setAutoCommit(false);
+
+                // 1. Vérifier s'il y a des commandes en cours
+                // On ne peut pas supprimer l'adresse si le livreur est en route !
+                String sqlCheck = "SELECT count(*) FROM Commande WHERE idClient = ? AND statut IN ('En préparation', 'En livraison')";
+                try (PreparedStatement ps = conn.prepareStatement(sqlCheck)) {
+                    ps.setInt(1, idClient);
+                    ResultSet rs = ps.executeQuery();
+                    if (rs.next() && rs.getInt(1) > 0) {
+                        System.out.println(" REFUS : Vous avez des commandes en cours de traitement.");
+                        System.out.println("   Veuillez attendre la livraison avant de supprimer votre compte.");
+                        conn.rollback();
+                        return;
+                    }
+                }
+
+                System.out.println(" ATTENTION : Cette action est irréversible.");
+                System.out.println("   Vos données personnelles seront effacées, mais l'historique de vos commandes sera conservé anonymement.");
+                System.out.print("   Confirmez-vous la suppression ? (O/N) : ");
+    
+                
+                // 2. Anonymiser le Client
+                String sqlAnonClient = "UPDATE Client SET " +
+                                       "nom = 'ANONYME', " +
+                                       "prenom = 'Supprimé', " +
+                                       "mail = 'anon_' || idClient || '@deleted.valaison.fr', " +
+                                       "telephone = '0000000000' " +
+                                       "WHERE idClient = ?";
+                
+                try (PreparedStatement ps = conn.prepareStatement(sqlAnonClient)) {
+                    ps.setInt(1, idClient);
+                    int row = ps.executeUpdate();
+                    if (row == 0) {
+                        System.out.println("Erreur : Client introuvable.");
+                        conn.rollback(); return;
+                    }
+                }
+
+                // 3. Anonymiser l'Adresse
+                String sqlAnonAddr = "UPDATE Adresse SET " +
+                                     "adressePostale = 'Données supprimées (RGPD)', " +
+                                     "latitude = 0, longitude = 0 " +
+                                     "WHERE idClient = ?";
+                                     
+                try (PreparedStatement ps = conn.prepareStatement(sqlAnonAddr)) {
+                    ps.setInt(1, idClient);
+                    ps.executeUpdate();
+                }
+
+                conn.commit();
+                System.out.println("Compte supprimé et données anonymisées avec succès.");
+
+            } catch (SQLException e) {
+                try { conn.rollback(); } catch (SQLException ex) {}
+                System.err.println("Erreur lors de l'anonymisation : " + e.getMessage());
+            }
+        }
+    }
     
 }
+
+
