@@ -119,6 +119,7 @@ CREATE TABLE Commande (
     modeRecuperation VARCHAR2(50),
     fraisLivraison NUMBER(10,2),
     montantTotal NUMBER(10,2),
+    dateRecuperation DATE ,
     CONSTRAINT Commande_PK PRIMARY KEY (idCommande),
     CONSTRAINT Cmd_Client_FK FOREIGN KEY (idClient) REFERENCES Client(idClient),
     CONSTRAINT Cmd_Adresse_FK FOREIGN KEY (idAdresseLivraison) REFERENCES Adresse(idAdresse)
