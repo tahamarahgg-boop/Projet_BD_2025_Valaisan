@@ -160,9 +160,9 @@ VALUES (5, SYSDATE-30, 24, 0, SYSDATE+180, 'DLUO');
 
 -- Vanille (Article 6 / Item 9) : PAS DE LOT CAR SUR COMMANDE
 
--- Farine (Article 7 / Item 10)
+-- Farine (Article 7 / Item 10) - Produit périmé
 INSERT INTO Lot (idArticle, dateReception, quantiteInitiale, quantiteDisponible, datePeremption, typePeremption) 
-VALUES (7, SYSDATE-20, 50, 48, SYSDATE, 'DLUO');
+VALUES (7, SYSDATE-20, 50, 48, SYSDATE-1, 'DLUO');
 
 
 COMMIT;

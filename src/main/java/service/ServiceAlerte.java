@@ -32,7 +32,7 @@ public class ServiceAlerte {
                 float stock = rs.getFloat("quantiteDisponible");
                 int nbJourRestant = rs.getInt("nbJourRestant");
                 
-                if(nbJourRestant<=0){
+                if(nbJourRestant<0){
                     System.out.printf("PERTE péremption : Article = %d, Lot = %d, Quantité = %3.f\n",
                         idArticle,idLot,stock);
                     perte_produit(idLot,stock,"Péremption");   

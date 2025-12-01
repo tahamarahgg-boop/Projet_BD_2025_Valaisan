@@ -128,7 +128,7 @@ SELECT idLot, idArticle, quantiteDisponible,
 FROM Lot 
 WHERE quantiteDisponible <> 0 
   AND datePeremption < SYSDATE + 7
-ORDER BY datePeremption ASC;
+FOR UPDATE; -- <-- Verrou pour qu'une commande ne prenne pas ce lot tant qu'il n'a pas été update
 
 
 -- B. Traitement : Produit PÉRIMÉ (Date dépassée)
